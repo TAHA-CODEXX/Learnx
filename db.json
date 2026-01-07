@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@learnx.com",
+      "password": "admin123",
+      "phone": "+1234567890",
+      "country": "USA",
+      "role": "ceo",
+      "name": "Admin User",
+      "avatar": "https://ui-avatars.com/api/?name=Admin+User&background=22c55e&color=fff"
+    },
+    {
+      "id": "2",
+      "email": "user@learnx.com",
+      "password": "user123",
+      "phone": "+9876543210",
+      "country": "Canada",
+      "role": "user",
+      "name": "John Doe",
+      "avatar": "https://ui-avatars.com/api/?name=John+Doe&background=22c55e&color=fff"
+    },
+    {
+      "id": "9c9d",
+      "name": "taha banouny",
+      "email": "tahastudying@gmail.com",
+      "password": "taha@1234",
+      "phone": "+212679594457",
+      "country": "Maroc",
+      "role": "user",
+      "avatar": "https://ui-avatars.com/api/?name=taha%20banouny&background=22c55e&color=fff"
+    },
+    {
+      "id": "92e6",
+      "name": "taha banouny",
+      "email": "tasks@gmail.com",
+      "password": "12345678",
+      "phone": "+212679594457",
+      "country": "Maroc",
+      "role": "user",
+      "avatar": "https://ui-avatars.com/api/?name=taha%20banouny&background=22c55e&color=fff"
+    }
+  ]
+}
