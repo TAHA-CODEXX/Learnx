@@ -1,16 +1,43 @@
-# React + Vite
+# Learnx
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend e-learning platform inspired by Coursera & Udemy, built with React and Tailwind CSS, featuring role-based dashboards and modern UI.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+This project uses React + Vite with the following setup:
+
+- **React** - UI library
+- **Vite** - Build tool with HMR (Hot Module Replacement)
+- **Tailwind CSS** - Utility-first CSS framework
+- **ESLint** - Code linting
+
+## Available Plugins
+
+Currently, two official Vite plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
+## Getting Started
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Expanding the ESLint configuration
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. Build for production:
+   ```bash
+   npm run build
+   ```
+
+## Features
+
+- Role-based authentication (Student/Instructor dashboards)
+- Multi-language support (English/French/Arabic)
+- Modern, responsive UI design
+- User profile management
