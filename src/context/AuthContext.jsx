@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -11,8 +10,12 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const savedUser = localStorage.getItem("learnx_user");
+        console.log("Loading user from localStorage:", savedUser);
         if (savedUser) {
-            setUser(JSON.parse(savedUser));
+            const parsedUser = JSON.parse(savedUser);
+            console.log("Parsed user:", parsedUser);
+            console.log("User role from storage:", parsedUser.role);
+            setUser(parsedUser);
         }
         setLoading(false);
     }, []);
@@ -45,19 +48,28 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const response = await fetch(`${API_URL}/users?email=${email}&password=${password}`);
+            const url = `${API_URL}/users?email=${email}&password=${password}`;
+            console.log("Fetching from URL:", url);
+            
+            const response = await fetch(url);
 
             if (!response.ok) {
                 throw new Error("Login failed");
             }
 
             const users = await response.json();
+            
+            console.log("Login response users:", users);
+            console.log("User count:", users.length);
 
             if (users.length === 0) {
                 return { success: false, error: "Invalid email or password" };
             }
 
             const authenticatedUser = users[0];
+            console.log("Authenticated user:", authenticatedUser);
+            console.log("User role:", authenticatedUser.role);
+            
             localStorage.setItem("learnx_user", JSON.stringify(authenticatedUser));
             setUser(authenticatedUser);
 

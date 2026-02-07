@@ -1,8 +1,8 @@
 import { FiSearch } from "react-icons/fi";
-import { useLanguage } from "../../context/LanguageContext";
+import { useSearch } from "../../context/SearchContext";
 
 const SearchInput = () => {
-    const { t } = useLanguage();
+    const { searchQuery, setSearchQuery } = useSearch();
 
     return (
         <div className="relative w-full max-w-md hidden md:block">
@@ -11,8 +11,10 @@ const SearchInput = () => {
             </div>
             <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-full bg-gray-50 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200 text-gray-900"
-                placeholder={t("searchPlaceholder")}
+                placeholder="Search..."
             />
         </div>
     );
