@@ -21,24 +21,166 @@
       "avatar": "https://ui-avatars.com/api/?name=John+Doe&background=22c55e&color=fff"
     },
     {
-      "id": "9c9d",
-      "name": "taha banouny",
-      "email": "tahastudying@gmail.com",
-      "password": "taha@1234",
-      "phone": "+212679594457",
-      "country": "Maroc",
-      "role": "user",
-      "avatar": "https://ui-avatars.com/api/?name=taha%20banouny&background=22c55e&color=fff"
+      "id": "inst_1",
+      "email": "instructor@learnx.com",
+      "password": "formateur123",
+      "phone": "+212600000000",
+      "country": "Morocco",
+      "role": "formateur",
+      "name": "Sarah Banouny",
+      "linkedin": "https://www.linkedin.com/in/taha-banouny/",
+      "description": "Expert in Web Development and React.",
+      "avatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767913836/handsome_boys_nsznj4.jpg"
     },
     {
-      "id": "92e6",
-      "name": "taha banouny",
-      "email": "tasks@gmail.com",
-      "password": "12345678",
+      "id": "inst_2",
+      "email": "instructor2@learnx.com",
+      "password": "formateur1234",
+      "phone": "+212600000000",
+      "country": "Morocco",
+      "role": "formateur",
+      "name": "Taha Banouny",
+      "linkedin": "https://www.linkedin.com/in/taha-banouny/",
+      "description": "Expert in Web Development and React.",
+      "avatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767971111/t%C3%A9l%C3%A9chargement_e1aqzu.jpg"
+    },
+    {
+      "name": "Hamza kouraich",
+      "email": "kouraichhamza121@gmail.com",
+      "password": "taha1234",
       "phone": "+212679594457",
       "country": "Maroc",
       "role": "user",
-      "avatar": "https://ui-avatars.com/api/?name=taha%20banouny&background=22c55e&color=fff"
+      "avatar": "https://ui-avatars.com/api/?name=Hamza%20kouraich&background=22c55e&color=fff",
+      "id": "3"
     }
-  ]
+  ],
+  "courses": [
+    {
+      "title": "Authentication & Security",
+      "shortDesc": "Implement secure authentication systems and protect user data in web applications.",
+      "category": "Cybersecurity",
+      "price": 50,
+      "skills": [
+        "JWT · Authentication · Authorization · Web Security"
+      ],
+      "image": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767922338/Revolutionize_Your_Web_Development_Game_r99u5b.jpg",
+      "instructorId": "inst_1",
+      "instructorName": "Sarah Banouny",
+      "instructorAvatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767913836/handsome_boys_nsznj4.jpg",
+      "likes": 3,
+      "students": 0,
+      "createdAt": "2026-01-09T01:32:55.644Z",
+      "id": 3,
+      "moreabout": [
+        "Deep dive into security headers and CSP",
+        "Handling cross-origin resource sharing (CORS)",
+        "Secure session management and cookie attributes",
+        "Mitigating CSRF and XSS attacks",
+        "Implementing multi-factor authentication (MFA)",
+        "Security auditing and penetration testing basics"
+      ]
+    },
+    {
+      "title": "Authentication & Security",
+      "shortDesc": "Implement secure authentication systems and protect user data in web applications.",
+      "category": "Cybersecurity",
+      "price": 50,
+      "skills": [
+        "JWT · Authentication · Authorization · Web Security"
+      ],
+      "image": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767922338/Revolutionize_Your_Web_Development_Game_r99u5b.jpg",
+      "instructorId": "inst_1",
+      "instructorName": "Sarah Banouny",
+      "instructorAvatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767913836/handsome_boys_nsznj4.jpg",
+      "likes": 9,
+      "students": 0,
+      "createdAt": "2026-01-09T01:32:55.644Z",
+      "id": 4,
+      "moreabout": [
+        "Advanced cryptography for web developers",
+        "Implementing end-to-end encryption",
+        "Securing microservices communication",
+        "Zero Trust architecture principles",
+        "Handling sensitive data in compliance with GDPR",
+        "Automating security testing in CI/CD pipelines"
+      ]
+    },
+    {
+      "title": "Authentication & Security",
+      "shortDesc": "Implement secure authentication systems and protect user data in web applications.",
+      "category": "Cybersecurity",
+      "price": 50,
+      "skills": [
+        "JWT · Authentication · Authorization · Web Security"
+      ],
+      "image": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767922338/Revolutionize_Your_Web_Development_Game_r99u5b.jpg",
+      "instructorId": "inst_2",
+      "instructorName": "Taha Banouny",
+      "instructorAvatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767971111/t%C3%A9l%C3%A9chargement_e1aqzu.jpg",
+      "likes": 4,
+      "students": 0,
+      "createdAt": "2026-01-09T01:32:55.644Z",
+      "id": 5,
+      "moreabout": [
+        "Modern API security with API Gateways",
+        "Rate limiting and Throttling implementation",
+        "Logging and Monitoring for security incidents",
+        "Post-quantum cryptography readiness",
+        "Biometric authentication web APIs",
+        "Building a custom IDP (Identity Provider)"
+      ]
+    }
+  ],
+  "purchases": [
+    {
+      "id": "p1",
+      "userId": "2",
+      "courseId": 2,
+      "purchaseDate": "2026-01-10T10:00:00.000Z"
+    },
+    {
+      "userId": "2",
+      "courseId": 2,
+      "purchaseDate": "2026-01-15T16:58:34.979Z",
+      "id": "p1768496314991"
+    },
+    {
+      "userId": "2",
+      "courseId": 5,
+      "purchaseDate": "2026-01-15T16:59:22.542Z",
+      "id": "p1768496362547"
+    },
+    {
+      "userId": "2",
+      "courseId": 4,
+      "purchaseDate": "2026-01-15T17:20:55.118Z",
+      "id": "p1768497655145"
+    },
+    {
+      "userId": "2",
+      "courseId": 4,
+      "purchaseDate": "2026-01-15T17:24:58.079Z",
+      "id": "p1768497898088"
+    },
+    {
+      "userId": "2",
+      "courseId": 5,
+      "purchaseDate": "2026-01-15T17:26:54.981Z",
+      "id": "p1768498014988"
+    },
+    {
+      "userId": "2",
+      "courseId": 2,
+      "purchaseDate": "2026-01-15T17:27:32.624Z",
+      "id": "p1768498052633"
+    },
+    {
+      "userId": "2",
+      "courseId": 3,
+      "purchaseDate": "2026-02-03T11:43:39.144Z",
+      "id": "p1770119019166"
+    }
+  ],
+  "messages": []
 }

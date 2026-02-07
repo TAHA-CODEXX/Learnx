@@ -27,3 +27,9 @@ body {
 * {
   box-sizing: border-box;
 }
+
+input,
+textarea,
+select {
+  color: #000000 !important;
+}
