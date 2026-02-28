@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { FiBookOpen, FiStar, FiCalendar, FiArrowRight, FiArrowLeft, FiUser, FiZap } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import CourseCard from "../components/CourseCard";
+import ChatBot from "../components/ChatBot/ChatBot";
 import { useSearch } from "../context/SearchContext";
 
 // Swiper imports
@@ -333,6 +334,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+            <ChatBot />
         </div>
     );
 };

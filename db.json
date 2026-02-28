@@ -8,7 +8,8 @@
       "country": "USA",
       "role": "ceo",
       "name": "Admin User",
-      "avatar": "https://ui-avatars.com/api/?name=Admin+User&background=22c55e&color=fff"
+      "avatar": "https://ui-avatars.com/api/?name=Admin+User&background=22c55e&color=fff",
+      "status": "active ceo"
     },
     {
       "id": "2",
@@ -16,9 +17,12 @@
       "password": "user123",
       "phone": "+9876543210",
       "country": "Canada",
-      "role": "user",
+      "role": "formateur",
       "name": "John Doe",
-      "avatar": "https://ui-avatars.com/api/?name=John+Doe&background=22c55e&color=fff"
+      "avatar": "https://ui-avatars.com/api/?name=John+Doe&background=22c55e&color=fff",
+      "linkedin": "https://www.linkedin.com/in/taha-banouny/",
+      "description": "Expert in Web Development and React.",
+      "status": "active user"
     },
     {
       "id": "inst_1",
@@ -30,7 +34,8 @@
       "name": "Sarah Banouny",
       "linkedin": "https://www.linkedin.com/in/taha-banouny/",
       "description": "Expert in Web Development and React.",
-      "avatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767913836/handsome_boys_nsznj4.jpg"
+      "avatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767913836/handsome_boys_nsznj4.jpg",
+      "status": "active formateure"
     },
     {
       "id": "inst_2",
@@ -42,7 +47,8 @@
       "name": "Taha Banouny",
       "linkedin": "https://www.linkedin.com/in/taha-banouny/",
       "description": "Expert in Web Development and React.",
-      "avatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767971111/t%C3%A9l%C3%A9chargement_e1aqzu.jpg"
+      "avatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767971111/t%C3%A9l%C3%A9chargement_e1aqzu.jpg",
+      "status": "active formateure"
     },
     {
       "name": "Hamza kouraich",
@@ -50,9 +56,52 @@
       "password": "taha1234",
       "phone": "+212679594457",
       "country": "Maroc",
-      "role": "user",
+      "role": "formateur",
       "avatar": "https://ui-avatars.com/api/?name=Hamza%20kouraich&background=22c55e&color=fff",
-      "id": "3"
+      "id": "3",
+      "status": "active user",
+      "description": "Expert en développement Web et React."
+    },
+    {
+      "name": "taha",
+      "email": "tahastudying@gmail.com",
+      "password": "taha1234",
+      "phone": "+212679594457",
+      "country": "Morocco",
+      "role": "formateur",
+      "status": "active user",
+      "avatar": "https://ui-avatars.com/api/?name=taha&background=22c55e&color=fff",
+      "id": "4",
+      "linkedin": "https://www.linkedin.com/in/taha-banouny/",
+      "description": "Expert en développement Web et React."
+    },
+    {
+      "name": "taha banouny",
+      "email": "tahastudying@gmail.com",
+      "password": "taha1212",
+      "phone": "+212679594457",
+      "country": "Morocco",
+      "role": "formateur",
+      "status": "active user",
+      "avatar": "https://ui-avatars.com/api/?name=taha%20banouny&background=22c55e&color=fff",
+      "id": "5",
+      "cvPath": "http://localhost:5000/uploads/1772275032276-600081152-cv.pdf.pdf",
+      "requestDate": "2026-02-28T10:37:12.283Z",
+      "description": "Expert en développement Web et React."
+    },
+    {
+      "name": "Sarah Test",
+      "email": "sarah.test@example.com",
+      "password": "password123",
+      "phone": "+212600000001",
+      "country": "Morocco",
+      "role": "user",
+      "status": "active user",
+      "avatar": "https://ui-avatars.com/api/?name=Sarah+Test&background=FF5733&color=fff",
+      "id": "6",
+      "cvPath": "http://localhost:5000/uploads/1772276861827-636775916-cv.pdf.pdf",
+      "description": "Expert en développement Web et React.",
+      "requestDate": "2026-02-28T11:07:41.836Z"
     }
   ],
   "courses": [
@@ -68,7 +117,7 @@
       "instructorId": "inst_1",
       "instructorName": "Sarah Banouny",
       "instructorAvatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767913836/handsome_boys_nsznj4.jpg",
-      "likes": 3,
+      "likes": 6,
       "students": 0,
       "createdAt": "2026-01-09T01:32:55.644Z",
       "id": 3,
@@ -122,6 +171,31 @@
       "students": 0,
       "createdAt": "2026-01-09T01:32:55.644Z",
       "id": 5,
+      "moreabout": [
+        "Modern API security with API Gateways",
+        "Rate limiting and Throttling implementation",
+        "Logging and Monitoring for security incidents",
+        "Post-quantum cryptography readiness",
+        "Biometric authentication web APIs",
+        "Building a custom IDP (Identity Provider)"
+      ]
+    },
+    {
+      "title": "Authentication & Security",
+      "shortDesc": "Implement secure authentication systems and protect user data in web applications.",
+      "category": "Cybersecurity",
+      "price": 50,
+      "skills": [
+        "JWT · Authentication · Authorization · Web Security"
+      ],
+      "image": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767922338/Revolutionize_Your_Web_Development_Game_r99u5b.jpg",
+      "instructorId": "inst_2",
+      "instructorName": "Taha Banouny",
+      "instructorAvatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767971111/t%C3%A9l%C3%A9chargement_e1aqzu.jpg",
+      "likes": 4,
+      "students": 0,
+      "createdAt": "2026-01-09T01:32:55.644Z",
+      "id": 6,
       "moreabout": [
         "Modern API security with API Gateways",
         "Rate limiting and Throttling implementation",

@@ -96,6 +96,9 @@ app.get('/users', (req, res) => {
     } else if (req.query.password) {
         console.log(`Filtering by password: ${req.query.password}`);
         users = users.filter(u => u.password === req.query.password);
+    } else if (req.query.role) {
+        console.log(`Filtering by role: ${req.query.role}`);
+        users = users.filter(u => u.role === req.query.role);
     }
 
     console.log(`Returning ${users.length} user(s)`);

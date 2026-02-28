@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
                 body: JSON.stringify({
                     ...userData,
                     role: "user", // Default role
+                    status: "active user", // Default status
                     avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=22c55e&color=fff`,
                 }),
             });
@@ -50,7 +51,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const url = `${API_URL}/users?email=${email}&password=${password}`;
             console.log("Fetching from URL:", url);
-            
+
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -58,7 +59,7 @@ export const AuthProvider = ({ children }) => {
             }
 
             const users = await response.json();
-            
+
             console.log("Login response users:", users);
             console.log("User count:", users.length);
 
@@ -69,7 +70,11 @@ export const AuthProvider = ({ children }) => {
             const authenticatedUser = users[0];
             console.log("Authenticated user:", authenticatedUser);
             console.log("User role:", authenticatedUser.role);
-            
+
+            if (authenticatedUser.status === 'banned') {
+                return { success: false, error: "Your account has been suspended. Please contact support." };
+            }
+
             localStorage.setItem("learnx_user", JSON.stringify(authenticatedUser));
             setUser(authenticatedUser);
 

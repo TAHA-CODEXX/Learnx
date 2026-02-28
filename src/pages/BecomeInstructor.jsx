@@ -7,186 +7,213 @@ import { useNavigate } from "react-router-dom";
 
 const BecomeInstructor = () => {
     const { user, logout } = useAuth();
-    const [isConverting, setIsConverting] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(10);
+    const [step, setStep] = useState(1); // 1: Instructions, 2: Upload CV, 3: Pending
+    const [isUploading, setIsUploading] = useState(false);
+    const [cvFile, setCvFile] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        let timer;
-        if (isConverting && timeLeft > 0) {
-            timer = setInterval(() => {
-                setTimeLeft((prev) => prev - 1);
-            }, 1000);
-        } else if (isConverting && timeLeft === 0) {
-            finishConversion();
-        }
-        return () => clearInterval(timer);
-    }, [isConverting, timeLeft]);
-
-    const handleBecomeFormateur = () => {
         if (!user) {
-            toast.error("Veuillez vous connecter pour devenir formateur");
+            toast.error("Veuillez vous connecter pour accéder à cette page.");
             navigate("/login");
             return;
         }
-        setIsConverting(true);
-        setTimeLeft(10);
-        toast.loading("Traitement de votre demande...", { id: "conversion-toast", duration: 10000 });
+        if (user?.status === "pending") {
+            setStep(3);
+        }
+    }, [user, navigate]);
+
+    const handleNextStep = () => {
+        setStep(2);
     };
 
-    const finishConversion = async () => {
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file && (file.type === "application/pdf" || file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
+            setCvFile(file);
+        } else {
+            toast.error("Veuillez télécharger un fichier PDF ou DOCX uniquement.");
+        }
+    };
+
+    const handleUploadCV = async () => {
+        if (!user) {
+            toast.error("Session expirée. Veuillez vous reconnecter.");
+            navigate("/login");
+            return;
+        }
+
+        if (!cvFile) {
+            toast.error("Veuillez sélectionner votre CV.");
+            return;
+        }
+
+        setIsUploading(true);
+        const loadingToast = toast.loading("Téléchargement de votre CV...");
+
         try {
-            const response = await fetch(`http://localhost:5000/users/${user.id}`, {
+            // 1. Upload the file
+            const formData = new FormData();
+            formData.append("file", cvFile);
+
+            const uploadRes = await fetch("http://localhost:5000/api/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!uploadRes.ok) throw new Error("Échec du téléchargement du fichier");
+            const { filePath } = await uploadRes.json();
+
+            // 2. Update user status and cvPath
+            const updateRes = await fetch(`http://localhost:5000/users/${user.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    role: "formateur",
-                    linkedin: "https://www.linkedin.com/in/taha-banouny/",
-                    description: "Expert en développement Web et React."
+                    status: "pending",
+                    cvPath: filePath,
+                    requestDate: new Date().toISOString()
                 }),
             });
 
-            if (!response.ok) throw new Error("Échec de la mise à jour du rôle");
+            if (!updateRes.ok) throw new Error("Échec de la mise à jour du profil");
 
-            toast.success("Bienvenue dans l'équipe des formateurs !", { id: "conversion-toast" });
+            toast.success("Demande envoyée avec succès !", { id: loadingToast });
+            setStep(3);
 
-            setTimeout(() => {
-                logout();
-                navigate("/login");
-            }, 2000);
+            // Note: We don't automatically logout here yet, we let them see the pending state.
+            // But they will need to relogin after acceptance to get the new role.
         } catch (error) {
-            console.error("Erreur lors de la conversion en formateur:", error);
-            toast.error("Le processus a échoué. Veuillez réessayer.", { id: "conversion-toast" });
-            setIsConverting(false);
+            console.error("Upload error:", error);
+            toast.error("Une erreur est survenue lors de l'envoi de votre demande.", { id: loadingToast });
+        } finally {
+            setIsUploading(false);
         }
     };
 
-    const features = [
+    const instructions = [
         {
-            icon: <FiZap className="w-6 h-6 text-accent" />,
-            title: "Impact immédiat",
-            description: "Partagez vos connaissances avec une communauté passionnée par la tech."
+            title: "Expertise Technique",
+            desc: "Vous devez maîtriser parfaitement les sujets que vous enseignez."
         },
         {
-            icon: <FiLayers className="w-6 h-6 text-accent" />,
-            title: "Méthodologie flexible",
-            description: "Créez vos cours à votre rythme. Notre plateforme s'adapte à votre style."
+            title: "Qualité Pédagogique",
+            desc: "Vos cours doivent être structurés, clairs et orientés vers la pratique."
         },
         {
-            icon: <FiUsers className="w-6 h-6 text-accent" />,
-            title: "Communauté de test",
-            description: "Nous sommes en version de test. Votre feedback aide à construire Learnx."
+            title: "Engagement",
+            desc: "Répondre aux questions des étudiants et mettre à jour vos contenus régulièrement."
         }
     ];
 
     return (
-        <div className="min-h-screen bg-white">
-            {/* Hero Section */}
-            <div className="relative py-20 bg-gray-50 overflow-hidden">
-                <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                    <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-green-100 text-green-800 mb-6 font-logo">
-                        Version Test Platforme
-                    </span>
-                    <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
-                        Venez enseigner sur <span className="text-accent font-logo">Learnx</span>
-                    </h1>
-                    <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
-                        Rejoignez notre plateforme de formation tech et commencez à partager votre expertise dès aujourd'hui.
-                    </p>
-                </div>
-                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-green-50 rounded-full blur-3xl opacity-50"></div>
-            </div>
-
-            {/* Methodology Section */}
-            <div className="py-24 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-6 font-logo">Notre Méthodologie</h2>
-                        <div className="space-y-8">
-                            <p className="text-gray-600 leading-relaxed">
-                                Learnx repose sur un apprentissage pratique. Notre méthodologie favorise la clarté et l'excellence technique.
-                            </p>
-                            <ul className="space-y-4">
-                                {[
-                                    "Apprentissage par la pratique (Hands-on)",
-                                    "Contenu tech de haute qualité",
-                                    "Parcours pédagogiques structurés"
-                                ].map((item, i) => (
-                                    <li key={i} className="flex items-start gap-3">
-                                        <FiCheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                                        <span className="text-gray-700 font-medium">{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
+        <div className="min-h-screen bg-gray-50 py-16">
+            <div className="max-w-4xl mx-auto px-4">
+                {/* Stepper Header */}
+                <div className="flex items-center justify-between mb-12 relative">
+                    <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gray-200 -z-10 -translate-y-1/2"></div>
+                    {[1, 2, 3].map((s) => (
+                        <div key={s} className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all ${step >= s ? "bg-accent text-white" : "bg-white text-gray-400 border-2 border-gray-200"}`}>
+                            {s}
                         </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {features.map((feature, i) => (
-                            <div key={i} className={`p-8 rounded-2xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow`}>
-                                <div className="mb-4">{feature.icon}</div>
-                                <h3 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h3>
-                                <p className="text-sm text-gray-600 leading-relaxed">{feature.description}</p>
-                            </div>
-                        ))}
-                    </div>
+                    ))}
                 </div>
-            </div>
 
-            {/* Conversion Section */}
-            <div className="py-24 bg-gray-900 text-white">
-                <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div className="inline-flex items-center justify-center p-4 bg-accent/20 rounded-full mb-8">
-                        <FiMonitor className="w-10 h-10 text-accent" />
-                    </div>
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 font-logo">Prêt à enseigner ?</h2>
-                    <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
-                        En version de test, devenez formateur en un clic. D'autres rôles arriveront prochainement.
-                    </p>
+                <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 p-8 md:p-12">
+                    {step === 1 && (
+                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6 font-logo">Devenir Collaborateur</h2>
+                            <p className="text-gray-600 mb-8 leading-relaxed">
+                                Rejoignez l'élite des formateurs tech. Voici les règles et responsabilités pour collaborer avec nous :
+                            </p>
 
-                    <div className="max-w-md mx-auto">
-                        {!user && (
+                            <div className="grid gap-6 mb-10">
+                                {instructions.map((item, i) => (
+                                    <div key={i} className="flex gap-4 p-5 bg-green-50/30 rounded-2xl border border-green-50/50">
+                                        <div className="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center text-accent shrink-0">
+                                            <FiCheckCircle />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-bold text-gray-900">{item.title}</h3>
+                                            <p className="text-sm text-gray-600 mt-1">{item.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
                             <button
-                                onClick={() => navigate("/login")}
-                                className="w-full py-4 bg-white text-gray-900 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all"
+                                onClick={handleNextStep}
+                                className="w-full py-4 bg-accent hover:bg-green-600 text-white rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-3"
                             >
-                                Connectez-vous pour commencer
+                                J'ai compris, suivant
+                                <FiArrowRight />
                             </button>
-                        )}
+                        </div>
+                    )}
 
-                        {user?.role === "user" && !isConverting && (
-                            <div className="p-8 bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10">
-                                <p className="text-accent font-bold uppercase tracking-widest text-sm mb-2 font-logo">Collaborateur</p>
+                    {step === 2 && (
+                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-4 font-logo">Soumettez votre CV</h2>
+                            <p className="text-gray-600 mb-8">
+                                Pour valider votre profil, nous avons besoin de consulter votre parcours professionnel.
+                            </p>
+
+                            <div className="border-3 border-dashed border-gray-200 rounded-3xl p-10 text-center hover:border-accent/50 transition-colors bg-gray-50/50 mb-8">
+                                <FiZap className="w-12 h-12 text-accent mx-auto mb-4 opacity-50" />
+                                <input
+                                    type="file"
+                                    id="cv-upload"
+                                    className="hidden"
+                                    onChange={handleFileChange}
+                                    accept=".pdf,.docx"
+                                />
+                                <label htmlFor="cv-upload" className="block cursor-pointer">
+                                    <span className="text-lg font-bold text-gray-900">
+                                        {cvFile ? cvFile.name : "Cliquez pour uploader votre CV"}
+                                    </span>
+                                    <p className="text-sm text-gray-500 mt-1">Format PDF ou DOCX uniquement</p>
+                                </label>
+                            </div>
+
+                            <div className="flex gap-4">
                                 <button
-                                    onClick={handleBecomeFormateur}
-                                    className="group w-full py-4 bg-accent hover:bg-green-600 text-white rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-3"
+                                    onClick={() => setStep(1)}
+                                    className="px-8 py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-2xl font-bold transition-all"
                                 >
-                                    <span>Devenir Collaborateur</span>
-                                    <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                                    Retour
+                                </button>
+                                <button
+                                    onClick={handleUploadCV}
+                                    disabled={!cvFile || isUploading}
+                                    className="flex-1 py-4 bg-accent hover:bg-green-600 text-white rounded-2xl font-bold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {isUploading ? "Envoi en cours..." : "Soumettre ma candidature"}
                                 </button>
                             </div>
-                        )}
+                        </div>
+                    )}
 
-                        {isConverting && (
-                            <div className="p-8 bg-amber-500/10 backdrop-blur-sm rounded-3xl border border-amber-500/20 flex flex-col items-center">
-                                <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-                                <p className="text-3xl font-bold text-amber-500">{timeLeft}s restants</p>
+                    {step === 3 && (
+                        <div className="text-center py-8 animate-in zoom-in duration-500">
+                            <div className="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">
+                                <FiZap className="animate-pulse" />
                             </div>
-                        )}
-
-                        {(user?.role === "formateur" || user?.role === "ceo") && (
-                            <div className="p-8 bg-green-500/10 backdrop-blur-sm rounded-3xl border border-green-500/20">
-                                <p className="text-accent font-bold mb-4 font-logo">Accès Autorisé</p>
-                                <button
-                                    onClick={() => navigate(user.role === "ceo" ? "/dashboard/ceo" : "/dashboard/formateure")}
-                                    className="w-full py-4 bg-accent hover:bg-green-600 text-white rounded-xl font-bold transition-all"
-                                >
-                                    Accéder au Dashboard
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                            <h2 className="text-3xl font-bold text-gray-900 mb-4 font-logo">Candidature en attente</h2>
+                            <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
+                                Merci de votre intérêt ! Votre candidature est actuellement en cours d'examen par notre équipe (Status: <span className="text-amber-600 font-bold italic">PENDING</span>).
+                            </p>
+                            <p className="text-sm text-gray-500 mb-10">
+                                Nous vous contacterons par email dès qu'une décision sera prise.
+                            </p>
+                            <button
+                                onClick={() => navigate("/")}
+                                className="px-10 py-4 bg-accent hover:bg-green-600 text-white rounded-2xl font-bold transition-all"
+                            >
+                                Retour à l'accueil
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

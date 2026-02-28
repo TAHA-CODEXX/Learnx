@@ -8,8 +8,6 @@ import toast from "react-hot-toast";
 
 const UserDropdown = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isConverting, setIsConverting] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(10);
     const { user, logout } = useAuth();
     const dropdownRef = useRef(null);
 
@@ -22,52 +20,6 @@ const UserDropdown = () => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-
-    useEffect(() => {
-        let timer;
-        if (isConverting && timeLeft > 0) {
-            timer = setInterval(() => {
-                setTimeLeft((prev) => prev - 1);
-            }, 1000);
-        } else if (isConverting && timeLeft === 0) {
-            finishConversion();
-        }
-        return () => clearInterval(timer);
-    }, [isConverting, timeLeft]);
-
-    const handleBecomeFormateur = () => {
-        setIsConverting(true);
-        setTimeLeft(10);
-        toast.loading("Processing your request...", { id: "conversion-toast", duration: 10000 });
-    };
-
-    const finishConversion = async () => {
-        try {
-            const response = await fetch(`http://localhost:5000/users/${user.id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    role: "formateur",
-                    linkedin: "https://www.linkedin.com/in/taha-banouny/",
-                    description: "Expert in Web Development and React."
-                }),
-            });
-
-            if (!response.ok) throw new Error("Failed to update role");
-
-            toast.success("Welcome to our formateur team!", { id: "conversion-toast" });
-
-            setTimeout(() => {
-                logout();
-            }, 2000);
-        } catch (error) {
-            console.error("Error becoming formateur:", error);
-            toast.error("Process failed. Please try again.", { id: "conversion-toast" });
-            setIsConverting(false);
-        }
-    };
 
     const menuItems = [
         { icon: <FiShoppingBag />, label: "My Purchases", link: "/purchases" },
@@ -122,24 +74,25 @@ const UserDropdown = () => {
                         </button>
                     </div>
 
-                    {user.role === "user" && !isConverting && (
-                        <div className="mx-4 mt-3 mb-1 p-3 bg-green-50 rounded-lg border border-green-100">
+                    {user.role === "user" && user.status !== "pending" && (
+                        <div className="mx-4 mt-3 mb-1 p-3 bg-green-50 rounded-lg border border-green-100 transition-all hover:bg-green-100/50">
                             <p className="text-xs font-bold text-green-700 uppercase tracking-wider mb-1">Become a Collaborator</p>
-                            <p className="text-[10px] text-green-600 mb-2">Share your knowledge and earn with us.</p>
-                            <button
-                                onClick={handleBecomeFormateur}
-                                className="w-full py-1.5 text-xs font-semibold bg-accent text-white rounded-md hover:bg-green-600 transition-colors"
+                            <p className="text-[10px] text-green-600 mb-2 font-medium">Share your knowledge and earn with us.</p>
+                            <Link
+                                to="/become-instructor"
+                                onClick={() => setIsOpen(false)}
+                                className="inline-block w-full py-2 text-center text-xs font-bold bg-accent text-white rounded-xl shadow-sm hover:shadow-md hover:bg-green-600 active:scale-[0.98] transition-all"
                             >
-                                Be a Collaborator
-                            </button>
+                                Get Started
+                            </Link>
                         </div>
                     )}
 
-                    {isConverting && (
+                    {user.role === "user" && user.status === "pending" && (
                         <div className="mx-4 mt-3 mb-1 p-3 bg-amber-50 rounded-lg border border-amber-100 flex flex-col items-center">
                             <div className="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin mb-2"></div>
-                            <p className="text-[10px] font-bold text-amber-700 uppercase mb-1">Processing...</p>
-                            <p className="text-sm font-bold text-amber-600">{timeLeft}s remaining</p>
+                            <p className="text-[10px] font-bold text-amber-700 uppercase text-center mb-1">Application Pending</p>
+                            <p className="text-[10px] text-amber-600 text-center">The CEO is currently reviewing your application. You will be notified soon.</p>
                         </div>
                     )}
                 </div>
