@@ -22,7 +22,9 @@
       "avatar": "https://ui-avatars.com/api/?name=John+Doe&background=22c55e&color=fff",
       "linkedin": "https://www.linkedin.com/in/taha-banouny/",
       "description": "Expert in Web Development and React.",
-      "status": "active user"
+      "status": "pending",
+      "cvPath": "http://localhost:5000/uploads/1772385524789-117446923-cv.pdf.pdf",
+      "requestDate": "2026-03-01T17:18:44.798Z"
     },
     {
       "id": "inst_1",
@@ -59,7 +61,7 @@
       "role": "formateur",
       "avatar": "https://ui-avatars.com/api/?name=Hamza%20kouraich&background=22c55e&color=fff",
       "id": "3",
-      "status": "active user",
+      "status": "active formateure",
       "description": "Expert en développement Web et React."
     },
     {
@@ -69,7 +71,7 @@
       "phone": "+212679594457",
       "country": "Morocco",
       "role": "formateur",
-      "status": "active user",
+      "status": "active formateure",
       "avatar": "https://ui-avatars.com/api/?name=taha&background=22c55e&color=fff",
       "id": "4",
       "linkedin": "https://www.linkedin.com/in/taha-banouny/",
@@ -82,7 +84,7 @@
       "phone": "+212679594457",
       "country": "Morocco",
       "role": "formateur",
-      "status": "active user",
+      "status": "active formateure",
       "avatar": "https://ui-avatars.com/api/?name=taha%20banouny&background=22c55e&color=fff",
       "id": "5",
       "cvPath": "http://localhost:5000/uploads/1772275032276-600081152-cv.pdf.pdf",
@@ -96,12 +98,36 @@
       "phone": "+212600000001",
       "country": "Morocco",
       "role": "user",
-      "status": "active user",
+      "status": "pending",
       "avatar": "https://ui-avatars.com/api/?name=Sarah+Test&background=FF5733&color=fff",
       "id": "6",
       "cvPath": "http://localhost:5000/uploads/1772276861827-636775916-cv.pdf.pdf",
       "description": "Expert en développement Web et React.",
       "requestDate": "2026-02-28T11:07:41.836Z"
+    },
+    {
+      "name": "taha",
+      "email": "taha@email.com",
+      "password": "taha12",
+      "phone": "+212679594457",
+      "country": "Morocco",
+      "role": "user",
+      "status": "pending",
+      "avatar": "https://ui-avatars.com/api/?name=taha&background=22c55e&color=fff",
+      "id": "7",
+      "cvPath": "http://localhost:5000/uploads/1772368785215-207276848-cv.pdf.pdf",
+      "requestDate": "2026-03-01T12:39:45.220Z"
+    },
+    {
+      "name": "taha ",
+      "email": "taha@email.ma",
+      "password": "taha123456",
+      "phone": "+212679594457",
+      "country": "Mexico",
+      "role": "user",
+      "status": "active user",
+      "avatar": "https://ui-avatars.com/api/?name=taha%20&background=22c55e&color=fff",
+      "id": "8"
     }
   ],
   "courses": [
@@ -142,7 +168,7 @@
       "instructorId": "inst_1",
       "instructorName": "Sarah Banouny",
       "instructorAvatar": "https://res.cloudinary.com/du5lp8l8r/image/upload/v1767913836/handsome_boys_nsznj4.jpg",
-      "likes": 9,
+      "likes": 10,
       "students": 0,
       "createdAt": "2026-01-09T01:32:55.644Z",
       "id": 4,
@@ -254,6 +280,12 @@
       "courseId": 3,
       "purchaseDate": "2026-02-03T11:43:39.144Z",
       "id": "p1770119019166"
+    },
+    {
+      "userId": "7",
+      "courseId": 6,
+      "purchaseDate": "2026-03-01T12:26:19.506Z",
+      "id": "p1772367979516"
     }
   ],
   "messages": []

@@ -201,10 +201,10 @@ const BecomeInstructor = () => {
                             </div>
                             <h2 className="text-3xl font-bold text-gray-900 mb-4 font-logo">Candidature en attente</h2>
                             <p className="text-gray-600 mb-8 max-w-md mx-auto leading-relaxed">
-                                Merci de votre intérêt ! Votre candidature est actuellement en cours d'examen par notre équipe (Status: <span className="text-amber-600 font-bold italic">PENDING</span>).
+                                Merci de votre intérêt ! Votre candidature est actuellement en cours d'examen par notre équipe (Statut : <span className="text-amber-600 font-bold italic">EN ATTENTE</span>).
                             </p>
                             <p className="text-sm text-gray-500 mb-10">
-                                Nous vous contacterons par email dès qu'une décision sera prise.
+                                Vous ne pouvez pas renvoyer d'invitation. Veuillez attendre la confirmation du CEO. Nous vous contacterons par e-mail dès qu'une décision sera prise.
                             </p>
                             <button
                                 onClick={() => navigate("/")}

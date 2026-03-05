@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FiBookOpen, FiStar, FiCalendar, FiArrowRight, FiArrowLeft, FiUser, FiZap } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import CourseCard from "../components/CourseCard";
@@ -24,13 +24,13 @@ const Home = () => {
     const [activeCategory, setActiveCategory] = useState("All");
 
     const categories = [
-        "All",
-        "Software Development",
-        "Mobile Development",
+        "Tous",
+        "Développement Logiciel",
+        "Développement Mobile",
         "DevOps",
-        "AI & Machine Learning",
+        "IA & Machine Learning",
         "Cloud Computing",
-        "Cybersecurity",
+        "Cybersécurité",
         "Blockchain"
     ];
 
@@ -78,7 +78,7 @@ const Home = () => {
         let filtered = allCourses;
 
         // Apply constant category filter
-        if (category !== "All") {
+        if (category !== "Tous") {
             filtered = filtered.filter(course => course.category === category);
         }
 
@@ -131,22 +131,22 @@ const Home = () => {
                     {filteredCourses.length === 0 && courses.length > 0 ? (
                         <div className="text-center py-20 bg-amber-50 rounded-3xl border-2 border-dashed border-amber-200">
                             <FiBookOpen size={48} className="mx-auto text-amber-400 mb-4" />
-                            <h3 className="text-xl font-bold text-gray-900 mb-2">No matching courses found</h3>
-                            <p className="text-gray-500">Try adjusting your search or category filters.</p>
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">Aucun cours correspondant trouvé</h3>
+                            <p className="text-gray-500">Essayez d'ajuster votre recherche ou vos filtres de catégories.</p>
                             <button
                                 onClick={() => {
-                                    handleCategoryFilter("All");
+                                    handleCategoryFilter("Tous");
                                 }}
                                 className="mt-4 px-6 py-2 bg-accent text-white font-semibold rounded-xl hover:bg-green-600 transition-colors"
                             >
-                                Reset Filters
+                                Réinitialiser les filtres
                             </button>
                         </div>
                     ) : filteredCourses.length === 0 ? (
                         <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
                             <FiBookOpen size={48} className="mx-auto text-gray-300 mb-4" />
-                            <h3 className="text-xl font-bold text-gray-900 mb-2">No Courses Available Yet</h3>
-                            <p className="text-gray-500 mb-2">Check back later or start by adding your own!</p>
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">Aucun cours disponible pour le moment</h3>
+                            <p className="text-gray-500 mb-2">Revenez plus tard ou commencez par ajouter le vôtre !</p>
                         </div>
                     ) : (
                         <CourseCard courses={filteredCourses} ownedCourseIds={ownedCourseIds} />
@@ -155,15 +155,15 @@ const Home = () => {
             </section>
 
             {/* Most Popular Courses Slider */}
-            {courses.length > 0 && !searchQuery && activeCategory === "All" && (
+            {courses.length > 0 && !searchQuery && activeCategory === "Tous" && (
                 <section className="py-20 bg-white overflow-hidden">
                     <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 flex items-center justify-between">
                         <div>
                             <h2 className="text-3xl font-black text-gray-900 flex items-center gap-3">
                                 <span className="p-2 bg-yellow-100 text-yellow-600 rounded-xl"><FiZap /></span>
-                                Most Popular Courses
+                                Cours les plus populaires
                             </h2>
-                            <p className="text-gray-500 mt-2">Join thousands of students in these top-rated courses</p>
+                            <p className="text-gray-500 mt-2">Rejoignez des milliers d'étudiants dans ces cours les mieux notés</p>
                         </div>
                         <div className="flex gap-2">
                             <button className="popular-prev p-3 rounded-full border-2 border-gray-100 hover:border-accent hover:text-accent transition-all">
@@ -209,8 +209,8 @@ const Home = () => {
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl -ml-48 -mb-48"></div>
 
                 <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">What people say about us</h2>
-                    <p className="text-gray-500 max-w-2xl mx-auto font-medium">Hear from our community of students and world-class collaborators who grow with us every day.</p>
+                    <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">Ce que les gens disent de nous</h2>
+                    <p className="text-gray-500 max-w-2xl mx-auto font-medium">Écoutez notre communauté d'étudiants et de collaborateurs de classe mondiale qui grandissent avec nous chaque jour.</p>
                 </div>
 
                 <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -272,10 +272,10 @@ const Home = () => {
                     <div className="flex flex-col lg:flex-row gap-16 items-center">
                         <div className="lg:w-1/2">
                             <span className="inline-block px-4 py-1.5 bg-accent/10 text-accent font-black text-xs uppercase tracking-widest rounded-full mb-6">
-                                Upcoming Events
+                                Événements à venir
                             </span>
                             <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-8 leading-tight">
-                                Our partners believe in us and <span className="text-accent underline decoration-4 underline-offset-8">invite you</span>.
+                                Nos partenaires croient en nous et <span className="text-accent underline decoration-4 underline-offset-8">vous invitent</span>.
                             </h2>
 
                             <div className="space-y-6">
@@ -295,7 +295,7 @@ const Home = () => {
                                                 <h4 className="text-xl font-black text-gray-900 mb-2 group-hover:text-accent transition-colors">{event.title}</h4>
                                                 <p className="text-sm text-gray-500 line-clamp-2 mb-4 font-medium">{event.description}</p>
                                                 <button className="flex items-center gap-2 text-xs font-black group-hover:gap-4 transition-all uppercase tracking-widest">
-                                                    Reserve Spot <FiArrowRight />
+                                                    Réserver ma place <FiArrowRight />
                                                 </button>
                                             </div>
                                         </div>
@@ -309,7 +309,7 @@ const Home = () => {
                             <div className="absolute -top-24 -right-24 w-64 h-64 bg-accent/20 rounded-full blur-[80px]"></div>
 
                             <div className="relative z-10 text-center">
-                                <h3 className="text-3xl font-black mb-10">Trusted by Global Partners</h3>
+                                <h3 className="text-3xl font-black mb-10">Approuvé par des Partenaires Mondiaux</h3>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-12">
                                     {partners.map((partner) => (
                                         <div key={partner.id} className="bg-white/5 backdrop-blur-md p-6 rounded-2xl flex items-center justify-center transition-all group">
@@ -319,13 +319,13 @@ const Home = () => {
                                 </div>
                                 <div className="bg-accent/10 border border-accent/20 p-8 rounded-[2rem]">
                                     <p className="text-gray-300 italic mb-6 font-medium">
-                                        "Learnx is more than just a platform; it's a movement where industry leaders meet tomorrow's talent."
+                                        "Learnx est plus qu'une simple plateforme ; c'est un mouvement où les leaders de l'industrie rencontrent les talents de demain."
                                     </p>
                                     <div className="flex items-center justify-center gap-4">
                                         <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center font-black">L</div>
                                         <div className="text-left">
-                                            <p className="font-black">Learnx Partnership</p>
-                                            <p className="text-xs text-accent uppercase font-black">Official Network</p>
+                                            <p className="font-black">Partenariat Learnx</p>
+                                            <p className="text-xs text-accent uppercase font-black">Réseau Officiel</p>
                                         </div>
                                     </div>
                                 </div>

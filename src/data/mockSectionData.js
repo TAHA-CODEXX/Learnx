@@ -6,71 +6,71 @@ export const testimonials = [
     {
         id: 1,
         name: "Sarah Johnson",
-        role: "Full Stack Developer",
+        role: "Développeuse Full Stack",
         image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150",
-        opinion: "Learnx has completely transformed my learning journey. The courses are high-quality and the community support is amazing!",
-        type: "user"
+        opinion: "Learnx a complètement transformé mon parcours d'apprentissage. Les cours sont de haute qualité et le soutien de la communauté est incroyable !",
+        type: "utilisateur"
     },
     {
         id: 2,
         name: "Dr. Robert Smith",
-        role: "AI Consultant @ TechFlow",
+        role: "Consultant IA @ TechFlow",
         image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150",
-        opinion: "As a collaborator, I've seen firsthand how Learnx prioritizes student success. Their platform is top-notch.",
-        type: "collaborator"
+        opinion: "En tant que collaborateur, j'ai vu de mes propres yeux comment Learnx donne la priorité à la réussite des étudiants. Leur plateforme est de premier ordre.",
+        type: "collaborateur"
     },
     {
         id: 3,
         name: "Emily Chen",
-        role: "UI/UX Designer",
+        role: "Designer UI/UX",
         image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150",
-        opinion: "The design courses on Learnx are simply the best. I've gained skills that helped me land my dream job!",
-        type: "user"
+        opinion: "Les cours de design sur Learnx sont tout simplement les meilleurs. J'ai acquis des compétences qui m'ont aidée à décrocher mon job de rêve !",
+        type: "utilisateur"
     },
     {
         id: 4,
         name: "Alex Rivera",
-        role: "Senior Engineer @ InnovateSolutions",
+        role: "Ingénieur Senior @ InnovateSolutions",
         image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150",
-        opinion: "Partnering with Learnx allows us to reach a wide audience of eager learners. It's a win-win for everyone.",
-        type: "collaborator"
+        opinion: "Le partenariat avec Learnx nous permet d'atteindre un large public d'apprenants motivés. C'est du gagnant-gagnant pour tout le monde.",
+        type: "collaborateur"
     },
     {
         id: 5,
         name: "Jessica White",
-        role: "Software Student",
+        role: "Étudiante en informatique",
         image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150",
-        opinion: "The interactive projects make learning so much more engaging. I highly recommend Learnx to all students.",
-        type: "user"
+        opinion: "Les projets interactifs rendent l'apprentissage tellement plus captivant. Je recommande vivement Learnx à tous les étudiants.",
+        type: "utilisateur"
     }
 ];
 
 export const events = [
     {
         id: 1,
-        title: "Global Tech Summit 2026",
+        title: "Sommet Technologique Mondial 2026",
         partner: "TechCorp Industries",
-        date: "March 15, 2026",
-        location: "San Francisco, CA / Online",
-        description: "Join us and our partner TechCorp for the biggest tech summit of the year. Learnx users get exclusive early access.",
+        date: "15 Mars 2026",
+        location: "San Francisco, CA / En ligne",
+        description: "Rejoignez-nous et notre partenaire TechCorp pour le plus grand sommet technologique de l'année. Les utilisateurs de Learnx bénéficient d'un accès anticipé exclusif.",
         image: ai1
     },
     {
         id: 2,
-        title: "Future of AI Webinar",
+        title: "Webinaire sur le Futur de l'IA",
         partner: "AIVision Labs",
-        date: "April 10, 2026",
-        location: "Online",
-        description: "A deep dive into the future of Artificial Intelligence with experts from AIVision Labs.",
+        date: "10 Avril 2026",
+        location: "En ligne",
+        description: "Une plongée profonde dans l'avenir de l'intelligence artificielle avec des experts de AIVision Labs.",
         image: ai2
     },
     {
         id: 3,
-        title: "Developers Conference 2026",
+        title: "Conférence des Développeurs 2026",
         partner: "DevConnect",
-        date: "May 22, 2026",
-        location: "London, UK",
-        description: "Network with developers from around the world and explore the latest trends in software engineering.",
+        date: "22 Mai 2026",
+        location: "Londres, UK",
+        description: "Réseautez avec des développeurs du monde entier et explorez les dernières tendances en ingénierie logicielle.",
         image: ai3
     }
 ];

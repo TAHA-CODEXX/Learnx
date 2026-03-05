@@ -22,8 +22,8 @@ const UserDropdown = () => {
     }, []);
 
     const menuItems = [
-        { icon: <FiShoppingBag />, label: "My Purchases", link: "/purchases" },
-        { icon: <FiHelpCircle />, label: "Help Support", link: "/contact" },
+        { icon: <FiShoppingBag />, label: "Mes Achats", link: "/purchases" },
+        { icon: <FiHelpCircle />, label: "Aide & Support", link: "/contact" },
     ];
 
     if (!user) return null;
@@ -70,20 +70,20 @@ const UserDropdown = () => {
                             className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
                         >
                             <FiLogOut className="text-lg" />
-                            Logout
+                            Se déconnecter
                         </button>
                     </div>
 
                     {user.role === "user" && user.status !== "pending" && (
                         <div className="mx-4 mt-3 mb-1 p-3 bg-green-50 rounded-lg border border-green-100 transition-all hover:bg-green-100/50">
-                            <p className="text-xs font-bold text-green-700 uppercase tracking-wider mb-1">Become a Collaborator</p>
-                            <p className="text-[10px] text-green-600 mb-2 font-medium">Share your knowledge and earn with us.</p>
+                            <p className="text-xs font-bold text-green-700 uppercase tracking-wider mb-1">Devenir Collaborateur</p>
+                            <p className="text-[10px] text-green-600 mb-2 font-medium">Partagez vos connaissances et gagnez avec nous.</p>
                             <Link
                                 to="/become-instructor"
                                 onClick={() => setIsOpen(false)}
                                 className="inline-block w-full py-2 text-center text-xs font-bold bg-accent text-white rounded-xl shadow-sm hover:shadow-md hover:bg-green-600 active:scale-[0.98] transition-all"
                             >
-                                Get Started
+                                Commencer
                             </Link>
                         </div>
                     )}
@@ -91,8 +91,8 @@ const UserDropdown = () => {
                     {user.role === "user" && user.status === "pending" && (
                         <div className="mx-4 mt-3 mb-1 p-3 bg-amber-50 rounded-lg border border-amber-100 flex flex-col items-center">
                             <div className="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin mb-2"></div>
-                            <p className="text-[10px] font-bold text-amber-700 uppercase text-center mb-1">Application Pending</p>
-                            <p className="text-[10px] text-amber-600 text-center">The CEO is currently reviewing your application. You will be notified soon.</p>
+                            <p className="text-[10px] font-bold text-amber-700 uppercase text-center mb-1">Candidature en attente</p>
+                            <p className="text-[10px] text-amber-600 text-center">Vous ne pouvez pas renvoyer d'invitation. Veuillez attendre la confirmation du CEO.</p>
                         </div>
                     )}
                 </div>

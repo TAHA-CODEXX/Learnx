@@ -23,17 +23,17 @@ const Login = () => {
 
         // Manual Validation
         if (isEmpty(formData.email)) {
-            toast.error("Please enter your email address");
+            toast.error("Veuillez saisir votre adresse e-mail");
             return;
         }
 
         if (!isValidEmail(formData.email)) {
-            toast.error("Please enter a valid email address");
+            toast.error("Veuillez saisir une adresse e-mail valide");
             return;
         }
 
         if (isEmpty(formData.password)) {
-            toast.error("Please enter your password");
+            toast.error("Veuillez saisir votre mot de passe");
             return;
         }
 
@@ -43,25 +43,25 @@ const Login = () => {
         setLoading(false);
 
         if (result.success) {
-            console.log("Login successful, user:", result.user);
-            console.log("User role:", result.user.role);
+            console.log("Connexion réussie, utilisateur :", result.user);
+            console.log("Rôle de l'utilisateur :", result.user.role);
 
-            toast.success(`Welcome back, ${result.user.name}!`);
+            toast.success(`Bon retour, ${result.user.name} !`);
             setTimeout(() => {
-                // Redirect based on role
+                // Redirection basée sur le rôle
                 if (result.user.role === "ceo") {
-                    console.log("Navigating to CEO dashboard");
+                    console.log("Navigation vers le tableau de bord CEO");
                     navigate("/dashboard/ceo");
                 } else if (result.user.role === "formateur") {
-                    console.log("Navigating to Formateur dashboard");
+                    console.log("Navigation vers le tableau de bord Formateur");
                     navigate("/dashboard/formateure");
                 } else {
-                    console.log("Navigating to home");
+                    console.log("Navigation vers l'accueil");
                     navigate("/");
                 }
             }, 1000);
         } else {
-            toast.error(result.error || "Login failed");
+            toast.error(result.error || "Échec de la connexion");
         }
     };
 
@@ -76,13 +76,13 @@ const Login = () => {
             </Link>
             <div className="max-w-[380px] w-full bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 p-7">
                 <div className="text-center mb-6">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-1.5">Welcome Back</h1>
-                    <p className="text-sm text-gray-500">Log in to continue your journey</p>
+                    <h1 className="text-2xl font-bold text-gray-900 mb-1.5">Bon Retour</h1>
+                    <p className="text-sm text-gray-500">Connectez-vous pour continuer votre parcours</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                     <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Adresse E-mail</label>
                         <div className="relative">
                             <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
@@ -91,13 +91,13 @@ const Login = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg bg-green-50/30 text-gray-900 placeholder-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
-                                placeholder="you@example.com"
+                                placeholder="vous@exemple.com"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Mot de passe</label>
                         <div className="relative">
                             <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
@@ -116,34 +116,16 @@ const Login = () => {
                         disabled={loading}
                         className="w-full py-3 bg-accent text-white font-bold rounded-xl hover:bg-green-600 hover:shadow-lg hover:shadow-green-100 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed mt-4"
                     >
-                        {loading ? "Logging in..." : "Login"}
+                        {loading ? "Connexion en cours..." : "Se connecter"}
                     </button>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-gray-600">
-                    Don't have an account?{" "}
+                    Vous n'avez pas de compte ?{" "}
                     <Link to="/signup" className="font-semibold text-accent hover:text-green-600 transition-colors">
-                        Sign Up
+                        S'inscrire
                     </Link>
                 </p>
-
-                <div className="mt-6 pt-5 border-t border-gray-100">
-                    <p className="text-[10px] font-bold text-gray-400 text-center uppercase tracking-wider mb-3">Test Accounts</p>
-                    <div className="space-y-1.5 text-[11px] text-gray-600">
-                        <div className="bg-gray-50/50 p-2 rounded-lg border border-gray-100 flex justify-between">
-                            <span><strong className="text-gray-900">Ceo:</strong> admin@learnx.com</span>
-                            <span className="text-gray-400 italic">admin123</span>
-                        </div>
-                        <div className="bg-gray-50/50 p-2 rounded-lg border border-gray-100 flex justify-between">
-                            <span><strong className="text-gray-900">User:</strong> user@learnx.com</span>
-                            <span className="text-gray-400 italic">user123</span>
-                        </div>
-                        <div className="bg-gray-50/50 p-2 rounded-lg border border-gray-100 flex justify-between">
-                            <span><strong className="text-gray-900">Formateur:</strong> instructor@learnx.com</span>
-                            <span className="text-gray-400 italic">formateur123</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     );

@@ -41,39 +41,39 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Manual Validation
+        // Validation Manuelle
         if (isEmpty(formData.name)) {
-            toast.error("Please enter your full name");
+            toast.error("Veuillez saisir votre nom complet");
             return;
         }
 
         if (isEmpty(formData.email)) {
-            toast.error("Please enter your email address");
+            toast.error("Veuillez saisir votre adresse e-mail");
             return;
         }
 
         if (!isValidEmail(formData.email)) {
-            toast.error("Please enter a valid email address");
+            toast.error("Veuillez saisir une adresse e-mail valide");
             return;
         }
 
         if (isEmpty(formData.password)) {
-            toast.error("Please enter a password");
+            toast.error("Veuillez saisir un mot de passe");
             return;
         }
 
         if (formData.password.length < 6) {
-            toast.error("Password must be at least 6 characters");
+            toast.error("Le mot de passe doit contenir au moins 6 caractères");
             return;
         }
 
         if (isEmpty(formData.phone)) {
-            toast.error("Please enter your phone number");
+            toast.error("Veuillez saisir votre numéro de téléphone");
             return;
         }
 
         if (isEmpty(formData.country)) {
-            toast.error("Please select your country");
+            toast.error("Veuillez sélectionner votre pays");
             return;
         }
 
@@ -83,10 +83,10 @@ const SignUp = () => {
         setLoading(false);
 
         if (result.success) {
-            toast.success("Account created successfully!");
+            toast.success("Compte créé avec succès !");
             setTimeout(() => navigate("/login"), 1500);
         } else {
-            toast.error(result.error || "Signup failed");
+            toast.error(result.error || "Échec de l'inscription");
         }
     };
 
@@ -97,17 +97,17 @@ const SignUp = () => {
                 to="/"
                 className="absolute top-8 left-8 flex items-center gap-2 text-gray-500 hover:text-accent transition-colors font-medium"
             >
-                <FiArrowLeft /> Home
+                <FiArrowLeft /> Accueil
             </Link>
             <div className="max-w-[400px] w-full bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 p-7">
                 <div className="text-center mb-6">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-1.5">Join Learnx</h1>
-                    <p className="text-sm text-gray-500">Start your journey today</p>
+                    <h1 className="text-2xl font-bold text-gray-900 mb-1.5">Rejoindre Learnx</h1>
+                    <p className="text-sm text-gray-500">Commencez votre parcours dès aujourd'hui</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                     <div>
-                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Full Name</label>
+                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Nom Complet</label>
                         <div className="relative">
                             <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
@@ -122,7 +122,7 @@ const SignUp = () => {
                     </div>
 
                     <div>
-                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Email Address</label>
+                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Adresse E-mail</label>
                         <div className="relative">
                             <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
@@ -137,7 +137,7 @@ const SignUp = () => {
                     </div>
 
                     <div>
-                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Password</label>
+                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Mot de passe</label>
                         <div className="relative">
                             <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
@@ -152,7 +152,7 @@ const SignUp = () => {
                     </div>
 
                     <div>
-                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Phone Number</label>
+                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Numéro de Téléphone</label>
                         <div className="relative">
                             <FiPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                             <input
@@ -167,7 +167,7 @@ const SignUp = () => {
                     </div>
 
                     <div>
-                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Country</label>
+                        <label className="block text-xs font-bold text-gray-700 mb-1.5 uppercase tracking-wide">Pays</label>
                         <div className="relative">
                             <FiGlobe className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10" />
                             <select
@@ -176,7 +176,7 @@ const SignUp = () => {
                                 onChange={handleChange}
                                 className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl bg-green-50/20 text-gray-900 focus:bg-white focus:outline-none focus:ring-4 focus:ring-green-50 focus:border-accent transition-all text-sm appearance-none"
                             >
-                                <option value="">Select Country</option>
+                                <option value="">Choisir un pays</option>
                                 {countries.map((country) => (
                                     <option key={country} value={country}>
                                         {country}
@@ -191,14 +191,14 @@ const SignUp = () => {
                         disabled={loading}
                         className="w-full py-3 bg-accent text-white font-bold rounded-xl hover:bg-green-600 hover:shadow-lg hover:shadow-green-100 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed mt-4"
                     >
-                        {loading ? "Creating account..." : "Sign Up"}
+                        {loading ? "Création du compte..." : "S'inscrire"}
                     </button>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-gray-600">
-                    Already have an account?{" "}
+                    Vous avez déjà un compte ?{" "}
                     <Link to="/login" className="font-semibold text-accent hover:text-green-600 transition-colors">
-                        Login
+                        Se connecter
                     </Link>
                 </p>
             </div>

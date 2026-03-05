@@ -26,12 +26,12 @@ const AddCourse = () => {
 
     // Categories must match exactly with Home.jsx filter categories
     const categories = [
-        "Software Development",
-        "Mobile Development",
+        "Développement Logiciel",
+        "Développement Mobile",
         "DevOps",
-        "AI & Machine Learning",
+        "IA & Machine Learning",
         "Cloud Computing",
-        "Cybersecurity",
+        "Cybersécurité",
         "Blockchain"
     ];
 
@@ -54,9 +54,9 @@ const AddCourse = () => {
         try {
             const imageUrl = await uploadToCloudinary(file);
             setFormData(prev => ({ ...prev, image: imageUrl }));
-            toast.success("Image uploaded to cloud!");
+            toast.success("Image téléchargée sur le cloud !");
         } catch (error) {
-            toast.error("Cloudinary upload failed. Make sure you have an unsigned preset 'ml_default'.");
+            toast.error("Échec du téléchargement Cloudinary. Assurez-vous d'avoir un preset non signé 'ml_default'.");
             setPreviewImage(null);
         } finally {
             setUploading(false);
@@ -66,33 +66,33 @@ const AddCourse = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Custom Validation
+        // Validation Personnalisée
         if (isEmpty(formData.title)) {
-            return toast.error("Please enter a course title");
+            return toast.error("Veuillez saisir un titre pour le cours");
         }
 
         if (isEmpty(formData.shortDesc)) {
-            return toast.error("Please enter a course description");
+            return toast.error("Veuillez saisir une description pour le cours");
         }
 
         if (isEmpty(formData.image)) {
-            return toast.error("Please upload a course image first");
+            return toast.error("Veuillez d'abord télécharger une image de cours");
         }
 
         if (isEmpty(formData.category)) {
-            return toast.error("Please select a category for your course");
+            return toast.error("Veuillez sélectionner une catégorie pour votre cours");
         }
 
         if (isEmpty(formData.skills)) {
-            return toast.error("Please enter some skills for the course");
+            return toast.error("Veuillez saisir quelques compétences pour le cours");
         }
 
         if (isEmpty(formData.moreabout)) {
-            return toast.error("Please enter details for 'What you'll learn'");
+            return toast.error("Veuillez saisir des détails pour 'Ce que vous apprendrez'");
         }
 
         if (isEmpty(formData.price)) {
-            return toast.error("Please enter a price for the course");
+            return toast.error("Veuillez saisir un prix pour le cours");
         }
 
         setPublishing(true);
@@ -118,13 +118,13 @@ const AddCourse = () => {
             });
 
             if (response.ok) {
-                toast.success("Congratulations! Your course is now live.");
+                toast.success("Félicitations ! Votre cours est maintenant en ligne.");
                 navigate("/dashboard/formateure");
             } else {
                 throw new Error("Failed to save course");
             }
         } catch (error) {
-            toast.error("Failed to publish course. Please try again.");
+            toast.error("Échec de la publication du cours. Veuillez réessayer.");
         } finally {
             setPublishing(false);
         }
@@ -143,8 +143,8 @@ const AddCourse = () => {
                             <FiArrowLeft className="text-gray-600 group-hover:-translate-x-1 transition-transform" size={20} />
                         </button>
                         <div>
-                            <h1 className="text-xl font-bold text-gray-900">Create New Course</h1>
-                            <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Step 1 of 1: Course Information</p>
+                            <h1 className="text-xl font-bold text-gray-900">Créer un Nouveau Cours</h1>
+                            <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">Étape 1 sur 1 : Informations sur le cours</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -152,7 +152,7 @@ const AddCourse = () => {
                             onClick={() => navigate(-1)}
                             className="px-5 py-2 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
                         >
-                            Discard
+                            Annuler
                         </button>
                         <button
                             form="add-course-form"
@@ -162,9 +162,9 @@ const AddCourse = () => {
                                 }`}
                         >
                             {publishing ? (
-                                <><FiLoader className="animate-spin" /> Publishing...</>
+                                <><FiLoader className="animate-spin" /> Publication...</>
                             ) : (
-                                "Publish Course"
+                                "Publier le Cours"
                             )}
                         </button>
                     </div>
@@ -183,30 +183,30 @@ const AddCourse = () => {
                                     <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
                                         <FiInfo size={18} />
                                     </div>
-                                    <h2 className="text-lg font-bold text-gray-900">Basic Information</h2>
+                                    <h2 className="text-lg font-bold text-gray-900">Informations de base</h2>
                                 </div>
 
                                 <div className="space-y-6">
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2">Course Title</label>
+                                        <label className="block text-sm font-bold text-gray-700 mb-2">Titre du Cours</label>
                                         <input
                                             type="text"
                                             value={formData.title}
                                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                             className="w-full px-5 py-3.5 bg-gray-50 border border-transparent rounded-2xl focus:bg-white focus:border-accent focus:ring-4 focus:ring-green-50 outline-none transition-all text-gray-900 placeholder:text-gray-400"
-                                            placeholder="e.g. Master Modern UI Design with Figma"
+                                            placeholder="ex. Maîtrisez le Design UI Moderne avec Figma"
                                         />
-                                        <p className="mt-2 text-xs text-gray-400">Title should be catchy and explain exactly what students will learn.</p>
+                                        <p className="mt-2 text-xs text-gray-400">Le titre doit être accrocheur et expliquer exactement ce que les étudiants apprendront.</p>
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-2">Course Description</label>
+                                        <label className="block text-sm font-bold text-gray-700 mb-2">Description du Cours</label>
                                         <textarea
                                             value={formData.shortDesc}
                                             onChange={(e) => setFormData({ ...formData, shortDesc: e.target.value })}
                                             rows="4"
                                             className="w-full px-5 py-3.5 bg-gray-50 border border-transparent rounded-2xl focus:bg-white focus:border-accent focus:ring-4 focus:ring-green-50 outline-none transition-all text-gray-900 placeholder:text-gray-400 resize-none"
-                                            placeholder="Introduce your course in a few sentences..."
+                                            placeholder="Présentez votre cours en quelques phrases..."
                                         ></textarea>
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@ const AddCourse = () => {
                                     <div className="p-2 bg-purple-50 text-purple-600 rounded-lg">
                                         <FiUploadCloud size={18} />
                                     </div>
-                                    <h2 className="text-lg font-bold text-gray-900">Course Thumbnail</h2>
+                                    <h2 className="text-lg font-bold text-gray-900">Miniature du Cours</h2>
                                 </div>
 
                                 <div className="relative group">
@@ -234,7 +234,7 @@ const AddCourse = () => {
                                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity backdrop-blur-[2px]">
                                                     <div className="flex gap-3">
                                                         <label className="px-4 py-2 bg-white text-gray-900 text-sm font-bold rounded-xl cursor-pointer hover:bg-gray-100 transition-colors">
-                                                            Change Image
+                                                            Modifier l'image
                                                             <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                                                         </label>
                                                         <button
@@ -249,7 +249,7 @@ const AddCourse = () => {
                                                 {uploading && (
                                                     <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center">
                                                         <FiLoader className="animate-spin text-accent mb-2" size={30} />
-                                                        <p className="text-sm font-bold text-gray-900 text-center px-4">Cloudinary is magic... <br />Uploading your image</p>
+                                                        <p className="text-sm font-bold text-gray-900 text-center px-4">Cloudinary est magique... <br />Téléchargement de votre image</p>
                                                     </div>
                                                 )}
                                                 {formData.image && !uploading && (
@@ -263,10 +263,10 @@ const AddCourse = () => {
                                                 <div className="w-16 h-16 bg-green-50 text-accent rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                                                     <FiUploadCloud size={28} />
                                                 </div>
-                                                <p className="text-base font-bold text-gray-900">Drop your course image here</p>
-                                                <p className="text-sm text-gray-400 mt-1">PNG, JPG or WebP (Recommended 16:9)</p>
+                                                <p className="text-base font-bold text-gray-900">Déposez votre image de cours ici</p>
+                                                <p className="text-sm text-gray-400 mt-1">PNG, JPG ou WebP (Recommandé 16:9)</p>
                                                 <div className="mt-6 px-4 py-2 bg-gray-900 text-white text-xs font-bold rounded-lg uppercase tracking-wide">
-                                                    Browse Files
+                                                    Parcourir les fichiers
                                                 </div>
                                                 <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                                             </label>
@@ -281,17 +281,17 @@ const AddCourse = () => {
                                     <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
                                         <FiTag size={18} />
                                     </div>
-                                    <h2 className="text-lg font-bold text-gray-900">Course Category</h2>
-                                    <span className="text-xs font-bold text-red-500">* Required</span>
+                                    <h2 className="text-lg font-bold text-gray-900">Catégorie du Cours</h2>
+                                    <span className="text-xs font-bold text-red-500">* Requis</span>
                                 </div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Select Course Category <span className="text-red-500">*</span></label>
+                                <label className="block text-sm font-bold text-gray-700 mb-2">Sélectionnez la catégorie du cours <span className="text-red-500">*</span></label>
                                 <div className="relative">
                                     <select
                                         value={formData.category}
                                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                                         className="w-full px-5 py-3.5 bg-gray-50 border border-transparent rounded-2xl focus:bg-white focus:border-accent focus:ring-4 focus:ring-green-50 outline-none transition-all text-gray-900 font-semibold appearance-none cursor-pointer pr-10"
                                     >
-                                        <option value="">-- Choose a category --</option>
+                                        <option value="">-- Choisissez une catégorie --</option>
                                         {categories.map((cat) => (
                                             <option key={cat} value={cat}>
                                                 {cat}
@@ -304,7 +304,7 @@ const AddCourse = () => {
                                         </svg>
                                     </div>
                                 </div>
-                                <p className="mt-2 text-xs text-gray-400">This category will be used to filter courses on the home page.</p>
+                                <p className="mt-2 text-xs text-gray-400">Cette catégorie sera utilisée pour filtrer les cours sur la page d'accueil.</p>
                             </div>
 
                             {/* Section 4: Details & Pricing */}
@@ -314,9 +314,9 @@ const AddCourse = () => {
                                         <div className="p-2 bg-orange-50 text-orange-600 rounded-lg">
                                             <FiLayers size={18} />
                                         </div>
-                                        <h2 className="text-lg font-bold text-gray-900">Curriculum Tags</h2>
+                                        <h2 className="text-lg font-bold text-gray-900">Tags du Programme</h2>
                                     </div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">Skills (Separate with commas)</label>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Compétences (séparez par des virgules)</label>
                                     <input
                                         type="text"
                                         value={formData.skills}
@@ -331,9 +331,9 @@ const AddCourse = () => {
                                         <div className="p-2 bg-green-50 text-green-600 rounded-lg">
                                             <FiDollarSign size={18} />
                                         </div>
-                                        <h2 className="text-lg font-bold text-gray-900">Pricing Strategy</h2>
+                                        <h2 className="text-lg font-bold text-gray-900">Stratégie de Prix</h2>
                                     </div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">Target Price ($)</label>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Prix Cible ($)</label>
                                     <div className="relative">
                                         <FiDollarSign className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                         <input
@@ -354,17 +354,17 @@ const AddCourse = () => {
                                     <div className="p-2 bg-green-50 text-green-600 rounded-lg">
                                         <FiCheck size={18} />
                                     </div>
-                                    <h2 className="text-lg font-bold text-gray-900">What students will learn</h2>
+                                    <h2 className="text-lg font-bold text-gray-900">Ce que les étudiants apprendront</h2>
                                 </div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Detailed Points (One per line)</label>
+                                <label className="block text-sm font-bold text-gray-700 mb-2">Points Détaillés (un par ligne)</label>
                                 <textarea
                                     value={formData.moreabout}
                                     onChange={(e) => setFormData({ ...formData, moreabout: e.target.value })}
                                     rows="6"
                                     className="w-full px-5 py-3.5 bg-gray-50 border border-transparent rounded-2xl focus:bg-white focus:border-accent focus:ring-4 focus:ring-green-50 outline-none transition-all text-gray-900 placeholder:text-gray-400 resize-none"
-                                    placeholder="Point 1: Master the basics...&#10;Point 2: Build amazing projects...&#10;Point 3: Ready for industry jobs..."
+                                    placeholder="Point 1 : Maîtrisez les bases...&#10;Point 2 : Créez des projets incroyables...&#10;Point 3 : Prêt pour des emplois dans l'industrie..."
                                 ></textarea>
-                                <p className="mt-2 text-xs text-gray-400">These points will appear in the "What you'll learn" section of the details page.</p>
+                                <p className="mt-2 text-xs text-gray-400">Ces points apparaîtront dans la section "Ce que vous apprendrez" de la page de détails.</p>
                             </div>
                         </form>
                     </div>
@@ -382,7 +382,7 @@ const AddCourse = () => {
                                         </div>
                                     )}
                                     <div className="absolute top-3 left-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-[10px] font-bold uppercase tracking-wider text-gray-600">
-                                        Preview
+                                        Aperçu
                                     </div>
                                 </div>
                                 <div className="p-6 space-y-4">
@@ -401,19 +401,19 @@ const AddCourse = () => {
                                         ))}
                                     </div>
                                     <h3 className="text-base font-bold text-gray-900 leading-tight min-h-[44px]">
-                                        {formData.title || "Your amazing course title will appear here"}
+                                        {formData.title || "Le titre de votre cours apparaîtra ici"}
                                     </h3>
                                     <div className="flex items-center gap-3 pt-2">
                                         <img src={user?.avatar} className="w-8 h-8 rounded-full object-cover bg-gray-100" />
                                         <div className="text-xs">
                                             <p className="font-bold text-gray-900">{user?.name}</p>
-                                            <p className="text-gray-400">Main Instructor</p>
+                                            <p className="text-gray-400">Instructeur Principal</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center justify-between pt-4 border-t border-gray-50">
                                         <span className="text-xl font-black text-gray-900">${formData.price || "0"}</span>
                                         <button disabled className="px-4 py-2 bg-accent/10 text-accent text-xs font-bold rounded-xl">
-                                            Live Preview
+                                            Aperçu en direct
                                         </button>
                                     </div>
                                 </div>
@@ -421,12 +421,12 @@ const AddCourse = () => {
 
                             <div className="bg-amber-50 rounded-2xl p-6 border border-amber-100">
                                 <h4 className="text-amber-800 font-bold text-sm mb-2 flex items-center gap-2">
-                                    <FiInfo /> Publishing Tips
+                                    <FiInfo /> Conseils de Publication
                                 </h4>
                                 <ul className="text-amber-700/80 text-xs space-y-2 font-medium">
-                                    <li>• Image size should be at least 1280x720.</li>
-                                    <li>• Keep your title under 60 characters.</li>
-                                    <li>• Don't forget to add relevant tags.</li>
+                                    <li>• La taille de l'image doit être d'au moins 1280x720.</li>
+                                    <li>• Gardez votre titre en dessous de 60 caractères.</li>
+                                    <li>• N'oubliez pas d'ajouter des tags pertinents.</li>
                                 </ul>
                             </div>
                         </div>

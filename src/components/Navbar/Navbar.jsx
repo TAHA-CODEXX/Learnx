@@ -34,7 +34,7 @@ const Navbar = () => {
                                     to="/dashboard/ceo"
                                     className="text-sm font-medium text-gray-600 hover:text-accent transition-colors"
                                 >
-                                    Dashboard
+                                    Tableau de bord
                                 </Link>
                             </div>
                         </div>
@@ -43,7 +43,7 @@ const Navbar = () => {
                                 onClick={handleLogout}
                                 className="px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             >
-                                Log Out
+                                Se déconnecter
                             </button>
                         </div>
                     </div>

@@ -115,10 +115,10 @@ const Dashboard = () => {
     };
 
     const stats = [
-        { icon: <FiUsers />, label: "totalUsers", value: "12,458", change: "+12%" },
-        { icon: <FiBookOpen />, label: "activeCourses", value: "1,247", change: "+8%" },
-        { icon: <FiDollarSign />, label: "revenue", value: "$48,392", change: "+23%" },
-        { icon: <FiTrendingUp />, label: "growth", value: "34%", change: "+5%" },
+        { icon: <FiUsers />, label: "Utilisateurs Totaux", value: "12,458", change: "+12%" },
+        { icon: <FiBookOpen />, label: "Cours Actifs", value: "1,247", change: "+8%" },
+        { icon: <FiDollarSign />, label: "Revenu", value: "$48,392", change: "+23%" },
+        { icon: <FiTrendingUp />, label: "Croissance", value: "34%", change: "+5%" },
     ];
 
     return (
@@ -126,8 +126,8 @@ const Dashboard = () => {
             <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mb-8 flex justify-between items-end">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">adminDashboard</h1>
-                        <p className="text-gray-500 mt-1">welcomeBackUser, {user?.name}</p>
+                        <h1 className="text-3xl font-bold text-gray-900">Tableau de bord Admin</h1>
+                        <p className="text-gray-500 mt-1">Bon retour, {user?.name}</p>
                     </div>
                 </div>
 
@@ -149,10 +149,10 @@ const Dashboard = () => {
                 {/* Invitations Section */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
                     <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        Invitations - Become Collaborator
+                        Invitations - Devenir Collaborateur
                         {pendingUsers.length > 0 && (
                             <span className="bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full text-xs font-bold">
-                                {pendingUsers.length} Pending
+                                {pendingUsers.length} En attente
                             </span>
                         )}
                     </h2>
@@ -174,7 +174,7 @@ const Dashboard = () => {
                                     </div>
 
                                     <div className="mb-6">
-                                        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Attached CV</p>
+                                        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">CV Joint</p>
                                         <a
                                             href={pendingUser.cvPath}
                                             target="_blank"
@@ -182,7 +182,7 @@ const Dashboard = () => {
                                             className="flex items-center gap-2 text-sm text-accent hover:underline font-semibold"
                                         >
                                             <FiBookOpen className="shrink-0" />
-                                            View Curriculum Vitae
+                                            Voir le Curriculum Vitae
                                         </a>
                                     </div>
 
@@ -191,20 +191,20 @@ const Dashboard = () => {
                                             onClick={() => handleAccept(pendingUser)}
                                             className="flex-1 py-2 bg-accent hover:bg-green-600 text-white rounded-xl text-sm font-bold transition-all"
                                         >
-                                            Accept
+                                            Accepter
                                         </button>
                                         <button
                                             onClick={() => handleRefuse(pendingUser)}
                                             className="flex-1 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-sm font-bold transition-all"
                                         >
-                                            Refuse
+                                            Refuser
                                         </button>
                                     </div>
                                 </div>
                             ))}
                         {pendingUsers.length === 0 && (
                             <div className="col-span-full py-10 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
-                                <p className="text-gray-400 font-medium">No pending invitations at the moment.</p>
+                                <p className="text-gray-400 font-medium">Aucune invitation en attente pour le moment.</p>
                             </div>
                         )}
                     </div>
@@ -212,16 +212,16 @@ const Dashboard = () => {
 
                 {/* Performance Section */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4">Formateur Performance</h2>
+                    <h2 className="text-lg font-bold text-gray-900 mb-4">Performance des Formateurs</h2>
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Instructor</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Instructeur</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Courses Created</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cours Créés</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
@@ -246,7 +246,7 @@ const Dashboard = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${instructor.status === 'banned' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
                                                 }`}>
-                                                {instructor.status === 'banned' ? 'Banned' : 'Active'}
+                                                {instructor.status === 'banned' ? 'Banni' : 'Actif'}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -257,7 +257,7 @@ const Dashboard = () => {
                                                     : 'bg-red-500 hover:bg-red-600'
                                                     }`}
                                             >
-                                                {instructor.status === 'banned' ? 'Unban' : 'Ban'}
+                                                {instructor.status === 'banned' ? 'Débannir' : 'Bannir'}
                                             </button>
                                         </td>
                                     </tr>
@@ -265,14 +265,14 @@ const Dashboard = () => {
                             </tbody>
                         </table>
                         {Instructors.length === 0 && !loading && (
-                            <p className="text-center text-gray-500 py-4">No instructors found.</p>
+                            <p className="text-center text-gray-500 py-4">Aucun formateur trouvé.</p>
                         )}
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                        <h2 className="text-lg font-bold text-gray-900 mb-4">recentActivity</h2>
+                        <h2 className="text-lg font-bold text-gray-900 mb-4">Activité récente</h2>
                         <div className="space-y-4">
                             {[1, 2, 3, 4].map((i) => (
                                 <div key={i} className="flex items-center gap-4 pb-4 border-b border-gray-100 last:border-0">
@@ -280,8 +280,8 @@ const Dashboard = () => {
                                         U{i}
                                     </div>
                                     <div className="flex-1">
-                                        <p className="text-sm font-semibold text-gray-900">userEnrolled React Course</p>
-                                        <p className="text-xs text-gray-500">2 hoursAgo</p>
+                                        <p className="text-sm font-semibold text-gray-900">Utilisateur inscrit au cours React</p>
+                                        <p className="text-xs text-gray-500">Il y a 2 heures</p>
                                     </div>
                                 </div>
                             ))}
@@ -289,13 +289,13 @@ const Dashboard = () => {
                     </div>
 
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                        <h2 className="text-lg font-bold text-gray-900 mb-4">topCourses</h2>
+                        <h2 className="text-lg font-bold text-gray-900 mb-4">Meilleurs Cours</h2>
                         <div className="space-y-4">
                             {["React Masterclass", "Python for Beginners", "UI/UX Design", "Data Science"].map((course, i) => (
                                 <div key={i} className="flex items-center justify-between pb-4 border-b border-gray-100 last:border-0">
                                     <div>
                                         <p className="text-sm font-semibold text-gray-900">{course}</p>
-                                        <p className="text-xs text-gray-500">{Math.floor(Math.random() * 500 + 100)} students</p>
+                                        <p className="text-xs text-gray-500">{Math.floor(Math.random() * 500 + 100)} étudiants</p>
                                     </div>
                                     <div className="text-right">
                                         <p className="text-sm font-bold text-accent">${Math.floor(Math.random() * 50 + 20)}</p>

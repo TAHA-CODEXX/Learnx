@@ -57,29 +57,29 @@ const Purchases = () => {
             <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between mb-10">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">My Purchases</h1>
-                        <p className="text-gray-500">All courses you've successfully enrolled in.</p>
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">Mes Achats</h1>
+                        <p className="text-gray-500">Tous les cours auxquels vous êtes inscrit avec succès.</p>
                     </div>
                     <Link
                         to="/"
                         className="px-6 py-2.5 bg-gray-50 text-gray-900 font-bold rounded-xl border border-gray-100 hover:bg-gray-100 transition-all"
                     >
-                        Browse More
+                        Parcourir plus
                     </Link>
                 </div>
 
                 {purchasedCourses.length === 0 ? (
                     <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
                         <FiBookOpen size={48} className="mx-auto text-gray-300 mb-4" />
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">No Courses Purchased Yet</h3>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Aucun cours acheté pour le moment</h3>
                         <p className="text-gray-500 mb-8 text-center max-w-md mx-auto">
-                            You haven't purchased any courses yet. Start your learning journey by exploring our wide range of courses!
+                            Vous n'avez pas encore acheté de cours. Commencez votre parcours d'apprentissage en explorant notre large gamme de cours !
                         </p>
                         <Link
                             to="/"
                             className="px-8 py-3.5 bg-accent text-white font-bold rounded-2xl hover:bg-green-600 transition-all shadow-lg active:scale-95"
                         >
-                            Explore Courses
+                            Explorer les Cours
                         </Link>
                     </div>
                 ) : (

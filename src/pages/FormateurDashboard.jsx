@@ -31,7 +31,15 @@ const FormateurDashboard = () => {
     const [updatingProfile, setUpdatingProfile] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [editingCourse, setEditingCourse] = useState(null);
-    const [editForm, setEditForm] = useState({ price: "", image: "", category: "", moreabout: "" });
+    const [editForm, setEditForm] = useState({
+        title: "",
+        shortDesc: "",
+        price: "",
+        image: "",
+        category: "",
+        skills: "",
+        moreabout: ""
+    });
     const [updatingCourse, setUpdatingCourse] = useState(false);
 
     const [profile, setProfile] = useState({
@@ -62,14 +70,14 @@ const FormateurDashboard = () => {
     const handleUpdateProfile = async () => {
         // Validation
         if (isEmpty(profile.linkedin)) {
-            return toast.error("Please enter your LinkedIn profile link");
+            return toast.error("Veuillez entrer le lien de votre profil LinkedIn");
         }
         if (isEmpty(profile.description)) {
-            return toast.error("Please enter a short bio");
+            return toast.error("Veuillez entrer une courte biographie");
         }
 
         setUpdatingProfile(true);
-        toast.loading("Updating profile & syncing with cloud...", { id: "updateProfile" });
+        toast.loading("Mise à jour du profil & synchronisation avec le cloud...", { id: "updateProfile" });
         let avatarPath = profile.avatar;
 
         try {
@@ -86,24 +94,24 @@ const FormateurDashboard = () => {
             if (response.ok) {
                 const updatedUser = { ...user, ...profile, avatar: avatarPath };
                 localStorage.setItem("learnx_user", JSON.stringify(updatedUser));
-                toast.success("Profile updated perfectly!", { id: "updateProfile" });
+                toast.success("Profil mis à jour parfaitement !", { id: "updateProfile" });
                 setIsEditingProfile(false);
                 setSelectedProfileFile(null);
                 setTimeout(() => window.location.reload(), 1000);
             } else {
-                throw new Error("Failed to update profile");
+                throw new Error("Échec de la mise à jour du profil");
             }
         } catch (error) {
-            toast.error("Failed to update profile. Check your Cloudinary config.", { id: "updateProfile" });
+            toast.error("Échec de la mise à jour du profil. Vérifiez votre configuration Cloudinary.", { id: "updateProfile" });
         } finally {
             setUpdatingProfile(false);
         }
     };
 
     const handleDeleteCourse = async (courseId) => {
-        if (!window.confirm("Are you sure you want to delete this course? This action cannot be undone.")) return;
+        if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce cours ? Cette action est irréversible.")) return;
 
-        toast.loading("Deleting course...", { id: "deleteCourse" });
+        toast.loading("Suppression du cours...", { id: "deleteCourse" });
         try {
             console.log("Attempting to delete course ID:", courseId);
             const url = `http://localhost:5000/courses/${courseId}`;
@@ -120,25 +128,28 @@ const FormateurDashboard = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log("Delete response data:", data);
-                toast.success("Course deleted successfully!", { id: "deleteCourse" });
+                toast.success("Cours supprimé avec succès !", { id: "deleteCourse" });
                 fetchCourses();
             } else {
                 const errorData = await response.json();
                 console.error("Delete error response:", errorData);
-                throw new Error(errorData.error || "Failed to delete course");
+                throw new Error(errorData.error || "Échec de la suppression du cours");
             }
         } catch (error) {
             console.error("Delete error:", error);
-            toast.error(error.message || "Error deleting course", { id: "deleteCourse" });
+            toast.error(error.message || "Erreur lors de la suppression du cours", { id: "deleteCourse" });
         }
     };
 
     const handleEditCourse = (course) => {
         setEditingCourse(course);
         setEditForm({
+            title: course.title || "",
+            shortDesc: course.shortDesc || "",
             price: course.price,
             image: course.image,
-            category: course.category || "Software Development",
+            category: course.category || "Développement Logiciel",
+            skills: (course.skills || []).join(", "),
             moreabout: (course.moreabout || []).join("\n")
         });
         setShowEditModal(true);
@@ -149,36 +160,39 @@ const FormateurDashboard = () => {
 
         // Validation
         if (isEmpty(editForm.price)) {
-            return toast.error("Please enter a course price");
+            return toast.error("Veuillez entrer un prix pour le cours");
         }
         if (isEmpty(editForm.image)) {
-            return toast.error("Please upload a course image");
+            return toast.error("Veuillez télécharger une image pour le cours");
         }
 
         setUpdatingCourse(true);
-        toast.loading("Updating course...", { id: "updateCourse" });
+        toast.loading("Mise à jour du cours...", { id: "updateCourse" });
 
         try {
             const response = await fetch(`http://localhost:5000/courses/${editingCourse.id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
+                    title: editForm.title,
+                    shortDesc: editForm.shortDesc,
                     price: Number(editForm.price),
                     image: editForm.image,
                     category: editForm.category,
+                    skills: editForm.skills.split(",").map(s => s.trim()).filter(s => s !== ""),
                     moreabout: editForm.moreabout.split("\n").map(s => s.trim()).filter(s => s !== "")
                 })
             });
 
             if (response.ok) {
-                toast.success("Course updated successfully!", { id: "updateCourse" });
+                toast.success("Cours mis à jour avec succès !", { id: "updateCourse" });
                 setShowEditModal(false);
                 fetchCourses();
             } else {
-                throw new Error("Failed to update course");
+                throw new Error("Échec de la mise à jour du cours");
             }
         } catch (error) {
-            toast.error("Error updating course", { id: "updateCourse" });
+            toast.error("Erreur lors de la mise à jour du cours", { id: "updateCourse" });
         } finally {
             setUpdatingCourse(false);
         }
@@ -186,21 +200,21 @@ const FormateurDashboard = () => {
 
     const handleEditImageUpload = async (file) => {
         if (!file) return;
-        toast.loading("Uploading new image...", { id: "uploadEditImage" });
+        toast.loading("Téléchargement de la nouvelle image...", { id: "uploadEditImage" });
         try {
             const imageUrl = await uploadToCloudinary(file);
             setEditForm(prev => ({ ...prev, image: imageUrl }));
-            toast.success("Image uploaded successfully!", { id: "uploadEditImage" });
+            toast.success("Image téléchargée avec succès !", { id: "uploadEditImage" });
         } catch (error) {
-            toast.error("Image upload failed", { id: "uploadEditImage" });
+            toast.error("Le téléchargement de l'image a échoué", { id: "uploadEditImage" });
         }
     };
 
     const stats = [
-        { icon: <FiBook />, label: "Total Courses", value: courses.length },
-        { icon: <FiUsers />, label: "Students", value: courses.reduce((acc, c) => acc + (c.students || 0), 0) },
+        { icon: <FiBook />, label: "Total Cours", value: courses.length },
+        { icon: <FiUsers />, label: "Étudiants", value: courses.reduce((acc, c) => acc + (c.students || 0), 0) },
         { icon: <FiHeart />, label: "Likes", value: courses.reduce((acc, c) => acc + (c.likes || 0), 0) },
-        { icon: <FiDollarSign />, label: "Earnings", value: `$${courses.reduce((acc, c) => acc + (c.students || 0) * (c.price || 0), 0)}` },
+        { icon: <FiDollarSign />, label: "Gains", value: `$${courses.reduce((acc, c) => acc + (c.students || 0) * (c.price || 0), 0)}` },
     ];
 
     return (
@@ -210,8 +224,8 @@ const FormateurDashboard = () => {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">Instructor Dashboard</h1>
-                        <p className="text-gray-500 mt-1">Welcome back, {user?.name}</p>
+                        <h1 className="text-3xl font-bold text-gray-900">Tableau de bord Formateur</h1>
+                        <p className="text-gray-500 mt-1">Bon retour, {user?.name}</p>
                     </div>
                     <div className="flex items-center gap-3">
                         <button
@@ -221,13 +235,13 @@ const FormateurDashboard = () => {
                             }}
                             className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 rounded-xl transition-all border border-red-100 hover:border-red-200"
                         >
-                            <FiLogOut size={18} /> Log Out
+                            <FiLogOut size={18} /> Se déconnecter
                         </button>
                         <button
                             onClick={() => navigate("/instructor/add-course")}
                             className="flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white font-semibold rounded-xl hover:bg-green-600 transition-all shadow-md hover:shadow-lg active:scale-95"
                         >
-                            <FiPlus size={20} /> Create New Course
+                            <FiPlus size={20} /> Créer un nouveau cours
                         </button>
                     </div>
                 </div>
@@ -254,20 +268,20 @@ const FormateurDashboard = () => {
                     <div className="lg:col-span-2 space-y-6">
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                             <div className="px-6 py-4 border-b border-gray-50 flex justify-between items-center">
-                                <h2 className="text-lg font-bold text-gray-900 font-outfit">My Courses</h2>
-                                <span className="text-sm text-gray-500">{courses.length} courses</span>
+                                <h2 className="text-lg font-bold text-gray-900 font-outfit">Mes Cours</h2>
+                                <span className="text-sm text-gray-500">{courses.length} cours</span>
                             </div>
                             <div className="divide-y divide-gray-50">
                                 {loading ? (
-                                    <div className="p-8 text-center text-gray-500">Loading courses...</div>
+                                    <div className="p-8 text-center text-gray-500">Chargement des cours...</div>
                                 ) : courses.length === 0 ? (
                                     <div className="p-12 text-center text-gray-500">
-                                        <p>You haven't created any courses yet.</p>
+                                        <p>Vous n'avez pas encore créé de cours.</p>
                                         <button
                                             onClick={() => navigate("/instructor/add-course")}
                                             className="text-accent font-semibold mt-2 hover:underline"
                                         >
-                                            Start by creating your first course
+                                            Commencez par créer votre premier cours
                                         </button>
                                     </div>
                                 ) : (
@@ -285,14 +299,14 @@ const FormateurDashboard = () => {
                                                         <button
                                                             onClick={() => handleEditCourse(course)}
                                                             className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
-                                                            title="Edit Price & Image"
+                                                            title="Modifier le prix et l'image"
                                                         >
                                                             <FiEdit size={18} />
                                                         </button>
                                                         <button
                                                             onClick={() => handleDeleteCourse(course.id)}
                                                             className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                                                            title="Delete Course"
+                                                            title="Supprimer le cours"
                                                         >
                                                             <FiTrash2 size={18} />
                                                         </button>
@@ -300,7 +314,7 @@ const FormateurDashboard = () => {
                                                 </div>
                                                 <p className="text-sm text-gray-500 line-clamp-2 mb-2">{course.shortDesc}</p>
                                                 <div className="flex items-center gap-4 text-xs font-semibold text-gray-400">
-                                                    <span className="flex items-center gap-1"><FiUsers /> {course.students} students</span>
+                                                    <span className="flex items-center gap-1"><FiUsers /> {course.students} étudiants</span>
                                                     <span className="flex items-center gap-1"><FiHeart className="text-red-400" /> {course.likes} likes</span>
                                                     <span className="px-2 py-0.5 bg-green-50 text-accent rounded-full">${course.price}</span>
                                                 </div>
@@ -316,7 +330,7 @@ const FormateurDashboard = () => {
                     <div className="lg:col-span-1">
                         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-24">
                             <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-lg font-bold text-gray-900">My Profile</h2>
+                                <h2 className="text-lg font-bold text-gray-900">Mon Profil</h2>
                                 <button
                                     onClick={() => isEditingProfile ? handleUpdateProfile() : setIsEditingProfile(true)}
                                     className={`p-2 rounded-lg transition-colors ${isEditingProfile ? 'text-accent bg-green-50' : 'text-gray-400 hover:text-accent hover:bg-green-50'}`}
@@ -349,12 +363,12 @@ const FormateurDashboard = () => {
                                         </div>
                                     </div>
                                     {selectedProfileFile && (
-                                        <p className="text-[10px] text-accent mt-1 font-bold">New image selected!</p>
+                                        <p className="text-[10px] text-accent mt-1 font-bold">Nouvelle image sélectionnée !</p>
                                     )}
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">LinkedIn Link</label>
+                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Lien LinkedIn</label>
                                     {isEditingProfile ? (
                                         <div className="relative">
                                             <FiLinkedin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -368,23 +382,23 @@ const FormateurDashboard = () => {
                                         </div>
                                     ) : (
                                         <a href={user?.linkedin} target="_blank" rel="noreferrer" className="text-sm text-accent hover:underline flex items-center gap-2">
-                                            <FiLinkedin /> View LinkedIn Profile
+                                            <FiLinkedin /> Voir le profil LinkedIn
                                         </a>
                                     )}
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Short Bio</label>
+                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Courte Bio</label>
                                     {isEditingProfile ? (
                                         <textarea
                                             value={profile.description}
                                             onChange={(e) => setProfile({ ...profile, description: e.target.value })}
                                             className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent focus:border-transparent outline-none resize-none h-32"
-                                            placeholder="Write a bit about yourself..."
+                                            placeholder="Écrivez un peu sur vous..."
                                         />
                                     ) : (
                                         <p className="text-sm text-gray-600 leading-relaxed italic">
-                                            "{user?.description || "No description added yet."}"
+                                            "{user?.description || "Aucune description ajoutée pour le moment."}"
                                         </p>
                                     )}
                                 </div>
@@ -398,35 +412,84 @@ const FormateurDashboard = () => {
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
                         <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
                             <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50/50">
-                                <h3 className="text-xl font-bold text-gray-900">Edit Course</h3>
+                                <h3 className="text-xl font-bold text-gray-900">Modifier le cours</h3>
                                 <button onClick={() => setShowEditModal(false)} className="p-2 hover:bg-gray-200 rounded-full transition-colors">
                                     <FiX size={24} className="text-gray-400" />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleUpdateCourse} className="p-6 space-y-6" noValidate>
+                            <form onSubmit={handleUpdateCourse} className="p-6 space-y-6 max-h-[70vh] overflow-y-auto" noValidate>
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">Update Price ($)</label>
-                                    <div className="relative">
-                                        <FiDollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                                        <input
-                                            type="number"
-                                            min="0"
-                                            value={editForm.price}
-                                            onChange={(e) => setEditForm({ ...editForm, price: e.target.value })}
-                                            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent outline-none transition-all font-bold"
-                                        />
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Titre du cours</label>
+                                    <input
+                                        type="text"
+                                        value={editForm.title}
+                                        onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent outline-none transition-all font-semibold"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Description courte</label>
+                                    <textarea
+                                        value={editForm.shortDesc}
+                                        onChange={(e) => setEditForm({ ...editForm, shortDesc: e.target.value })}
+                                        rows="3"
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent outline-none transition-all text-sm resize-none"
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-700 mb-2">Catégorie</label>
+                                        <select
+                                            value={editForm.category}
+                                            onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
+                                            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent outline-none transition-all text-sm font-semibold"
+                                        >
+                                            <option value="Développement Logiciel">Développement Logiciel</option>
+                                            <option value="Développement Mobile">Développement Mobile</option>
+                                            <option value="DevOps">DevOps</option>
+                                            <option value="IA & Machine Learning">IA & Machine Learning</option>
+                                            <option value="Cloud Computing">Cloud Computing</option>
+                                            <option value="Cybersécurité">Cybersécurité</option>
+                                            <option value="Blockchain">Blockchain</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-700 mb-2">Prix ($)</label>
+                                        <div className="relative">
+                                            <FiDollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                value={editForm.price}
+                                                onChange={(e) => setEditForm({ ...editForm, price: e.target.value })}
+                                                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent outline-none transition-all font-bold"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">Update Course Image</label>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Compétences (Séparées par des virgules)</label>
+                                    <input
+                                        type="text"
+                                        value={editForm.skills}
+                                        onChange={(e) => setEditForm({ ...editForm, skills: e.target.value })}
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent outline-none transition-all text-sm"
+                                        placeholder="React, Tailwind, Node.js..."
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Miniature</label>
                                     <div className="space-y-4">
-                                        <div className="aspect-video w-full rounded-2xl overflow-hidden border border-gray-100 bg-gray-50">
+                                        <div className="aspect-video w-full rounded-2xl overflow-hidden border border-gray-100 bg-gray-50 shadow-inner">
                                             <img src={editForm.image} alt="Preview" className="w-full h-full object-cover" />
                                         </div>
-                                        <label className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gray-900 text-white rounded-xl cursor-pointer hover:bg-gray-800 transition-colors font-bold text-sm">
-                                            <FiPlus /> Change Image
+                                        <label className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-gray-900 text-white rounded-xl cursor-pointer hover:bg-gray-800 transition-colors font-bold text-sm">
+                                            <FiPlus /> Changer l'image
                                             <input
                                                 type="file"
                                                 className="hidden"
@@ -438,30 +501,30 @@ const FormateurDashboard = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">Update What you'll learn (One per line)</label>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Points d'objectifs (Un par ligne)</label>
                                     <textarea
                                         value={editForm.moreabout}
                                         onChange={(e) => setEditForm({ ...editForm, moreabout: e.target.value })}
                                         rows="4"
-                                        className="w-full px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent outline-none transition-all text-sm resize-none"
-                                        placeholder="Enter each point on a new line..."
+                                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent outline-none transition-all text-sm resize-none"
+                                        placeholder="Maîtrisez les bases..."
                                     ></textarea>
                                 </div>
 
-                                <div className="flex gap-3 pt-4">
+                                <div className="flex gap-3 pt-4 sticky bottom-0 bg-white border-t border-gray-50 -mx-6 px-6 py-4">
                                     <button
                                         type="button"
                                         onClick={() => setShowEditModal(false)}
                                         className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors"
                                     >
-                                        Cancel
+                                        Annuler
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={updatingCourse}
                                         className="flex-1 px-6 py-3 bg-accent text-white font-bold rounded-xl hover:bg-green-600 transition-all shadow-md disabled:opacity-50"
                                     >
-                                        {updatingCourse ? "Saving..." : "Save Changes"}
+                                        {updatingCourse ? "Enregistrement..." : "Enregistrer les modifications"}
                                     </button>
                                 </div>
                             </form>
